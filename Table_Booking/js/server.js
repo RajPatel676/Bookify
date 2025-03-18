@@ -22,6 +22,14 @@ app.use('/js', express.static(path.join(__dirname, '..', 'js')));
 app.use('/img', express.static(path.join(__dirname, '..', 'img')));
 app.use('/lib', express.static(path.join(__dirname, '..', 'lib')));
 
+
+
+app.get('/', (req, res) => {
+    res.send("Server is running successfully!");
+});
+
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
