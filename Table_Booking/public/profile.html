@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Profile</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="https://www.favicon.cc/" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&family=Pacifico&display=swap"
+        rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.4/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="../lib/animate/animate.min.css" rel="stylesheet">
+    <link href="../lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="../lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="../css/style.css" rel="stylesheet">
+
+    <style>
+        .profile-img {
+            width: 6rem;
+            height: 6rem;
+            border-radius: 50%;
+            background-color: #e0e0e0;
+            margin-bottom: 1rem;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+        }
+
+        .order-status {
+            font-size: 0.75rem;
+            font-weight: bold;
+            color: #4CAF50;
+            background-color: #e8f5e9;
+            padding: 0.2rem 0.5rem;
+            border-radius: 0.2rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <div class="container-fluid position-relative p-0">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0 wow fadeInDown"
+            data-wow-delay="0.3s" id="navbar">
+            <a href="index.html" class="navbar-brand p-0">
+                <h1 class="text-primary m-0"></i><span class="animated-text">Bookify</span></h1>
+                <!-- <img src="img/logo.png" alt="Logo"> -->
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="fa fa-bars"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="navbar-nav ms-auto py-0 pe-4">
+                    <a href="index.html" class="nav-item nav-link">Home</a>
+                    <a href="about.html" class="nav-item nav-link">About</a>
+
+                    <a href="booking.html" class="nav-item nav-link ">Booking</a>
+                    <a href="contact.html" class="nav-item nav-link">Contact</a>
+                    <div id="profile2" style="padding: 34px 0px;">
+                        <!-- <button id="profile-button" style="display: none;  background: none;" class="nav-item">
+                            <i class="fa fa-user-circle" style="font-size: 25px;"></i>
+                        </button> -->
+                        <a href="profile.html" class="nav-item nav-link active " id="profile-button">
+                            <i class="fa fa-user-circle" style="font-size: 25px;"></i>
+                        </a>
+                        <a href="login.html" id="login-button" class="btn btn-primary py-2 px-4"
+                            style="display: none;">Login</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+
+
+        <!-- From Uiverse.io by kennyotsu -->
+        <div class="container-fluid">
+            <div class="card">
+                <div class="loader">
+                    <p>Comming</p>
+                    <div class="words">
+                        <span class="word">Soon</span>
+                        <span class="word">Profile</span>
+                        <span class="word">Shortly</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <main class="container py-5">
+            <div class="row">
+                <!-- Sidebar -->
+                <div class="col-md-3">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <div class="text-center mb-4">
+                                <div class="profile-img"></div>
+                                <h2 class="h5">John Doe</h2>
+                                <p class="text-muted">Customer</p>
+                            </div>
+                            <nav>
+                                <button class="btn btn-link d-flex align-items-center w-100 text-start">
+                                    <i class="fas fa-shopping-bag me-2"></i> Orders
+                                </button>
+                                <button class="btn btn-link d-flex align-items-center w-100 text-start">
+                                    <i class="fas fa-map-pin me-2"></i> Addresses
+                                </button>
+                                <button class="btn btn-link d-flex align-items-center w-100 text-start">
+                                    <i class="fas fa-cogs me-2"></i> Settings
+                                </button>
+                                <button class="btn btn-link d-flex align-items-center w-100 text-start text-danger">
+                                    <i class="fas fa-sign-out-alt me-2"></i> Logout
+                                </button>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Content -->
+                <div class="col-md-9">
+                    <!-- Profile Information -->
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5 class="card-title">Profile Information</h5>
+                            <button class="btn btn-outline-secondary" id="editProfileBtn">Edit Profile</button>
+                        </div>
+                        <div class="card-body">
+                            <form id="profileForm">
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">Full Name</label>
+                                    <input type="text" class="form-control" id="name" value="John Doe" disabled>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="email" value="john@example.com"
+                                        disabled>
+                                </div>
+                                <!-- <div class="mb-3">
+                                    <label for="phone" class="form-label">Phone</label>
+                                    <input type="tel" class="form-control" id="phone" value="+1 234 567 890" disabled>
+                                </div> -->
+                                <!-- <div class="mb-3">
+                                    <label for="location" class="form-label">Location</label>
+                                    <input type="text" class="form-control" id="location" value="New York, USA"
+                                        disabled>
+                                </div> -->
+                                <button type="submit" class="btn btn-primary w-100" id="saveChangesBtn"
+                                    style="display: none;">Save Changes</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Recent Orders -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">Recent Orders</h5>
+                        </div>
+                        <div class="card-body">
+                            <div id="orders">
+                                <!-- Orders will be dynamically added here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <script>
+            let isEditing = false;
+
+            // Toggle Edit Mode
+            document.getElementById('editProfileBtn').addEventListener('click', () => {
+                isEditing = !isEditing;
+                document.getElementById('profileForm').querySelectorAll('input').forEach(input => {
+                    input.disabled = !isEditing;
+                });
+                document.getElementById('saveChangesBtn').style.display = isEditing ? 'block' : 'none';
+                document.getElementById('editProfileBtn').textContent = isEditing ? 'Cancel' : 'Edit Profile';
+            });
+
+            // Load recent orders
+            const orders = [
+                { orderId: '123456', itemsCount: 2, totalPrice: 99.98, status: 'Delivered' },
+                { orderId: '123457', itemsCount: 1, totalPrice: 49.99, status: 'Delivered' },
+                { orderId: '123458', itemsCount: 3, totalPrice: 150.00, status: 'Pending' },
+            ];
+
+            const ordersContainer = document.getElementById('orders');
+            orders.forEach(order => {
+                const orderDiv = document.createElement('div');
+                orderDiv.classList.add('p-3', 'border', 'rounded', 'mb-3', 'd-flex', 'justify-content-between', 'align-items-start', 'cursor-pointer', 'hover:bg-light');
+                orderDiv.innerHTML = `
+            <div>
+              <p class="fw-bold">Order #${order.orderId}</p>
+              <p class="text-muted">${order.itemsCount} items • $${order.totalPrice}</p>
+            </div>
+            <span class="order-status">${order.status}</span>
+          `;
+                ordersContainer.appendChild(orderDiv);
+            });
+        </script>
+
+
+        <!-- JavaScript Libraries -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="../lib/wow/wow.min.js"></script>
+        <script src="../lib/easing/easing.min.js"></script>
+        <script src="../lib/waypoints/waypoints.min.js"></script>
+        <script src="../lib/counterup/counterup.min.js"></script>
+        <script src="../lib/owlcarousel/owl.carousel.min.js"></script>
+        <script src="../lib/tempusdominus/js/moment.min.js"></script>
+        <script src="../lib/tempusdominus/js/moment-timezone.min.js"></script>
+        <script src="../lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+        <!-- Template Javascript -->
+        <script src="../js/main.js"></script>
+    </div>
+
+</body>
+
+</html>

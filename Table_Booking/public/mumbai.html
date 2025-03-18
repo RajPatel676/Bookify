@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Booking</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&family=Pacifico&display=swap"
+        rel="stylesheet">
+
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.4/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+
+    <link href="../lib/animate/animate.min.css" rel="stylesheet">
+    <link href="../lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="../lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="../css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container-fluid bg-white p-0">
+        <!-- Navbar & Hero Start -->
+        <div class="container-fluid position-relative p-0">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0 wow fadeInDown"
+                data-wow-delay="0.3s" id="navbar">
+                <a href="index.html" class="navbar-brand p-0">
+                    <h1 class="text-primary m-0"></i><span class="animated-text">Bookify</span></h1>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                    <span class="fa fa-bars"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto py-0 pe-4">
+                        <a href="index.html" class="nav-item nav-link">Home</a>
+                        <a href="about.html" class="nav-item nav-link">About</a>
+                        <!--  -->
+                        <a href="booking.html" class="nav-item nav-link active"><span
+                                class="animated-text2">Booking</span></a>
+                        <a href="contact.html" class="nav-item nav-link">Contact</a>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="container-fluid py-5 bg-dark hero-header mb-5">
+                <div class="container text-center my-5 pt-5 pb-4">
+                    <h1 class="display-3 text-white mb-3 animated slideInDown"><span
+                            class="animated-text2">Booking</span></h1>
+                </div>
+            </div>
+        </div>
+        <!-- Navbar & Hero End -->
+
+
+        <!-- Booking Type Selection -->
+        <div class="container ">
+            <div class="row mb-1 py-5">
+                <div class="col-md-4">
+                    <button class="btn btn-primary w-100 py-3 mb-2 booking-type-btn wow fadeInLeft bookBut"
+                        data-wow-delay="0.3s" data-target="hotel-form">Hotel
+                        Booking</button>
+                </div>
+                <div class="col-md-4">
+                    <button class="btn btn-primary w-100 py-3 mb-2 booking-type-btn wow fadeInUp bookBut"
+                        data-wow-delay="0.1s" data-target="guesthouse-form">Guest House Booking</button>
+                </div>
+                <div class="col-md-4">
+                    <button class="btn btn-primary w-100 py-3 mb-2 booking-type-btn wow fadeInRight bookBut"
+                        data-wow-delay="0.3s" data-target="restaurant-form">Restaurant Booking</button>
+                </div>
+                <hr style="border: 1px solid #000; margin: 20px auto;">
+
+            </div>
+
+            <!-- Forms Section -->
+            <div class="booking-forms">
+
+
+                <!-- Hotel Booking Form -->
+                <div id="hotel-form" class="booking-form" style="display: none;">
+                    <h1 class="mb-4 wow fadeInUp" data-wow-delay="0.1s">Hotel Booking</h1>
+                    <div class="listing-card wow fadeInUp" data-wow-delay="0.1s">
+                        <div class="row g-0">
+                            <div class="col-md-4 col-lg-3">
+                                <div class="hotel-img-container">
+                                    <img src="../img/HotelRoom.jpg" alt="Hotel" class="hotel-img  m-3 img-fluid">
+                                    <button class="wishlist-btn">
+                                        <i class="far fa-heart "></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-md-8 col-lg-9 main-card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12 col-lg-8">
+                                            <div class="d-flex align-items-center flex-wrap">
+                                                <h5 class="mb-0">FabHotel Powai Inn ⭐⭐⭐</h5>
+                                                <span class="featured-badge">Featured</span>
+                                            </div>
+                                            <div class="location-info mt-2">
+                                                <span>Powai, Mumbai</span>
+                                                <a href="#" class="ms-2">Show on map</a>
+                                                <span class="text-muted ms-2">5.3 km from centre</span>
+                                            </div>
+                                            <div class="deal-badge">Early 2025 Deal</div>
+                                            <div class="room-info mt-3">
+                                                <h6 class="mb-1">Deluxe Room</h6>
+                                                <p class="mb-2">1 double bed</p>
+                                                <p class="cancellation-info mb-1">
+                                                    <i class="fas fa-check"></i> Free cancellation
+                                                </p>
+                                                <p class="cancellation-info">
+                                                    <i class="fas fa-check"></i> No prepayment needed – pay at the
+                                                    property
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-lg-4">
+                                            <div class="price-info text-lg-end">
+                                                <div
+                                                    class="d-flex justify-content-between justify-content-lg-end align-items-center mb-2">
+                                                    <div class="d-flex align-items-center gap-2">
+                                                        <span class="text-muted">Review score</span>
+                                                        <span class="rating-badge">4.3</span>
+                                                    </div>
+                                                </div>
+                                                <div class="mt-3">
+                                                    <p class="mb-0"><small>1 night, 2 adults</small></p>
+                                                    <p class="original-price mb-0">₹ 4,504</p>
+                                                    <p class="current-price mb-0">₹ 2,246</p>
+                                                    <p class="text-muted mb-3"><small>+₹ 270 taxes and charges</small>
+                                                    </p>
+                                                    <button class="btn btn-primary bookBut w-100"
+                                                        onclick="window.location.href='booking-details.html'">BOOK NOW
+                                                        ›</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Hotel Linkway -->
+                    <div class="listing-card wow fadeInUp" data-wow-delay="0.3s">
+                        <div class="row g-0">
+                            <div class="col-md-4 col-lg-3">
+                                <div class="hotel-img-container">
+                                    <img src="../img/HotelRoom.jpg" alt="Hotel" class="hotel-img  m-3 img-fluid">
+                                    <button class="wishlist-btn">
+                                        <i class="far fa-heart"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-md-8 col-lg-9 main-card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12 col-lg-8">
+                                            <div class="d-flex align-items-center flex-wrap">
+                                                <h5 class="mb-0">FabHotel Powai Inn ⭐⭐⭐</h5>
+                                                <span class="featured-badge">Featured</span>
+                                            </div>
+                                            <div class="location-info mt-2">
+                                                <span>Powai, Mumbai</span>
+                                                <a href="#" class="ms-2">Show on map</a>
+                                                <span class="text-muted ms-2">5.3 km from centre</span>
+                                            </div>
+                                            <div class="deal-badge">Early 2025 Deal</div>
+                                            <div class="room-info mt-3">
+                                                <h6 class="mb-1">Deluxe Room</h6>
+                                                <p class="mb-2">1 double bed</p>
+                                                <p class="cancellation-info mb-1">
+                                                    <i class="fas fa-check"></i> Free cancellation
+                                                </p>
+                                                <p class="cancellation-info">
+                                                    <i class="fas fa-check"></i> No prepayment needed – pay at the
+                                                    property
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-lg-4 ">
+                                            <div class="price-info text-lg-end">
+                                                <div
+                                                    class="d-flex justify-content-between justify-content-lg-end align-items-center mb-2">
+                                                    <div class="d-flex align-items-center gap-2">
+                                                        <span class="text-muted">Review score</span>
+                                                        <span class="rating-badge">4.3</span>
+                                                    </div>
+
+                                                </div>
+                                                <div class="mt-3">
+                                                    <p class="mb-0"><small>1 night, 2 adults</small></p>
+                                                    <p class="original-price mb-0">₹ 4,504</p>
+                                                    <p class="current-price mb-0">₹ 2,246</p>
+                                                    <p class="text-muted mb-3"><small>+₹ 270 taxes and charges</small>
+                                                    </p>
+                                                    <button class="btn btn-primary bookBut w-100"
+                                                        onclick="window.location.href='booking-details.html'">BOOK NOW
+                                                        ›</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Super Hotel O Sakinaka -->
+                    <div class="listing-card wow fadeInUp" data-wow-delay="0.5s">
+                        <div class="row g-0">
+                            <div class="col-md-4 col-lg-3 ">
+                                <div class="hotel-img-container">
+                                    <img src="../img/HotelRoom.jpg" alt="Hotel" class="hotel-img  m-3 img-fluid">
+                                    <button class="wishlist-btn">
+                                        <i class="far fa-heart"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-md-8 col-lg-9 main-card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12 col-lg-8">
+                                            <div class="d-flex align-items-center flex-wrap">
+                                                <h5 class="mb-0">FabHotel Powai Inn ⭐⭐⭐</h5>
+                                                <span class="featured-badge">Featured</span>
+                                            </div>
+                                            <div class="location-info mt-2">
+                                                <span>Powai, Mumbai</span>
+                                                <a href="#" class="ms-2">Show on map</a>
+                                                <span class="text-muted ms-2">5.3 km from centre</span>
+                                            </div>
+                                            <div class="deal-badge">Early 2025 Deal</div>
+                                            <div class="room-info mt-3">
+                                                <h6 class="mb-1">Deluxe Room</h6>
+                                                <p class="mb-2">1 double bed</p>
+                                                <p class="cancellation-info mb-1">
+                                                    <i class="fas fa-check"></i> Free cancellation
+                                                </p>
+                                                <p class="cancellation-info">
+                                                    <i class="fas fa-check"></i> No prepayment needed – pay at the
+                                                    property
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-lg-4">
+                                            <div class="price-info text-lg-end mr-2">
+                                                <div
+                                                    class="d-flex justify-content-between justify-content-lg-end align-items-center mb-2">
+                                                    <div class="d-flex align-items-center gap-2">
+                                                        <span class="text-muted">Review score</span>
+                                                        <span class="rating-badge">4.3</span>
+                                                    </div>
+                                                </div>
+                                                <div class="mt-3">
+                                                    <p class="mb-0"><small>1 night, 2 adults</small></p>
+                                                    <p class="original-price mb-0">₹ 4,504</p>
+                                                    <p class="current-price mb-0">₹ 2,246</p>
+                                                    <p class="text-muted mb-3"><small>+₹ 270 taxes and charges</small>
+                                                    </p>
+                                                    <button class="btn btn-primary bookBut w-100"
+                                                        onclick="window.location.href='booking-details.html'">BOOK NOW
+                                                        ›</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="listing-card wow fadeInUp" data-wow-delay="0.7s">
+                        <div class="row g-0">
+                            <div class="col-md-4 col-lg-3 ">
+                                <div class="hotel-img-container">
+                                    <img src="../img/HotelRoom.jpg" alt="Hotel" class="hotel-img  m-3 img-fluid">
+                                    <button class="wishlist-btn">
+                                        <i class="far fa-heart"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-md-8 col-lg-9 main-card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12 col-lg-8">
+                                            <div class="d-flex align-items-center flex-wrap">
+                                                <h5 class="mb-0">FabHotel Powai Inn ⭐⭐⭐</h5>
+                                                <span class="featured-badge">Featured</span>
+                                            </div>
+                                            <div class="location-info mt-2">
+                                                <span>Powai, Mumbai</span>
+                                                <a href="#" class="ms-2">Show on map</a>
+                                                <span class="text-muted ms-2">5.3 km from centre</span>
+                                            </div>
+                                            <div class="deal-badge">Early 2025 Deal</div>
+                                            <div class="room-info mt-3">
+                                                <h6 class="mb-1">Deluxe Room</h6>
+                                                <p class="mb-2">1 double bed</p>
+                                                <p class="cancellation-info mb-1">
+                                                    <i class="fas fa-check"></i> Free cancellation
+                                                </p>
+                                                <p class="cancellation-info">
+                                                    <i class="fas fa-check"></i> No prepayment needed – pay at the
+                                                    property
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-lg-4">
+                                            <div class="price-info text-lg-end mr-2">
+                                                <div
+                                                    class="d-flex justify-content-between justify-content-lg-end align-items-center mb-2">
+                                                    <div class="d-flex align-items-center gap-2">
+                                                        <span class="text-muted">Review score</span>
+                                                        <span class="rating-badge">4.3</span>
+                                                    </div>
+                                                </div>
+                                                <div class="mt-3">
+                                                    <p class="mb-0"><small>1 night, 2 adults</small></p>
+                                                    <p class="original-price mb-0">₹ 4,504</p>
+                                                    <p class="current-price mb-0">₹ 2,246</p>
+                                                    <p class="text-muted mb-3"><small>+₹ 270 taxes and charges</small>
+                                                    </p>
+                                                    <button class="btn btn-primary bookBut w-100"
+                                                        onclick="window.location.href='booking-details.html'">BOOK NOW
+                                                        ›</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Guest House Booking Form -->
+                <div id="guesthouse-form" class="booking-form" style="display: none;">
+                    <h1 class=" mb-4 wow fadeInUp" data-wow-delay="0.1s">Guest House Booking</h1>
+                    <div class="listing-card wow fadeInUp" data-wow-delay="0.1s">
+                        <div class="row g-0">
+                            <div class="col-md-4 col-lg-3">
+                                <div class="hotel-img-container">
+                                    <img src="../img/HotelRoom.jpg" alt="Hotel" class="hotel-img m-3 img-fluid">
+                                    <button class="wishlist-btn">
+                                        <i class="far fa-heart"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-md-8 col-lg-9 main-card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12 col-lg-8">
+                                            <div class="d-flex align-items-center flex-wrap">
+                                                <h5 class="mb-0">FabHotel Powai Inn ⭐⭐⭐</h5>
+                                                <span class="featured-badge">Featured</span>
+                                            </div>
+                                            <div class="location-info mt-2">
+                                                <span>Powai, Mumbai</span>
+                                                <a href="#" class="ms-2">Show on map</a>
+                                                <span class="text-muted ms-2">5.3 km from centre</span>
+                                            </div>
+                                            <div class="deal-badge">Early 2025 Deal</div>
+                                            <div class="room-info mt-3">
+                                                <h6 class="mb-1">Deluxe Guest House</h6>
+                                                <p class="mb-2">2 BHK</p>
+                                                <p class="cancellation-info mb-1">
+                                                    <i class="fas fa-check"></i> Free cancellation
+                                                </p>
+                                                <p class="cancellation-info">
+                                                    <i class="fas fa-check"></i> No prepayment needed – pay at the
+                                                    property
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-lg-4">
+                                            <div class="price-info text-lg-end">
+                                                <div
+                                                    class="d-flex justify-content-between justify-content-lg-end align-items-center mb-2">
+                                                    <div class="d-flex align-items-center gap-2">
+                                                        <span class="text-muted">Review score</span>
+                                                        <span class="rating-badge">4.3</span>
+                                                    </div>
+                                                </div>
+                                                <div class="mt-3">
+                                                    <p class="mb-0"><small>1 night</small></p>
+                                                    <p class="original-price mb-0">₹ 4,504</p>
+                                                    <p class="current-price mb-0">₹ 2,246</p>
+                                                    <p class="text-muted mb-3"><small>+₹ 270 taxes and charges</small>
+                                                    </p>
+                                                    <button class="btn btn-primary bookBut w-100">BOOK NOW
+                                                        ›</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- The Orion Premium Suites -->
+                    <div class="listing-card wow fadeInUp" data-wow-delay="0.1s">
+                        <div class="row g-0">
+                            <div class="col-md-4 col-lg-3">
+                                <div class="hotel-img-container">
+                                    <img src="../img/HotelRoom.jpg" alt="Hotel" class="hotel-img  m-3 img-fluid">
+                                    <button class="wishlist-btn">
+                                        <i class="far fa-heart"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-md-8 col-lg-9 main-card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12 col-lg-8">
+                                            <div class="d-flex align-items-center flex-wrap">
+                                                <h5 class="mb-0">FabHotel Powai Inn ⭐⭐⭐</h5>
+                                                <span class="featured-badge">Featured</span>
+                                            </div>
+                                            <div class="location-info mt-2">
+                                                <span>Powai, Mumbai</span>
+                                                <a href="#" class="ms-2">Show on map</a>
+                                                <span class="text-muted ms-2">5.3 km from centre</span>
+                                            </div>
+                                            <div class="deal-badge">Early 2025 Deal</div>
+                                            <div class="room-info mt-3">
+                                                <h6 class="mb-1">Deluxe Guest House</h6>
+                                                <p class="mb-2">2 BHK</p>
+                                                <p class="cancellation-info mb-1">
+                                                    <i class="fas fa-check"></i> Free cancellation
+                                                </p>
+                                                <p class="cancellation-info">
+                                                    <i class="fas fa-check"></i> No prepayment needed – pay at the
+                                                    property
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-lg-4">
+                                            <div class="price-info text-lg-end">
+                                                <div
+                                                    class="d-flex justify-content-between justify-content-lg-end align-items-center mb-2">
+                                                    <div class="d-flex align-items-center gap-2">
+                                                        <span class="text-muted">Review score</span>
+                                                        <span class="rating-badge">4.3</span>
+                                                    </div>
+                                                </div>
+                                                <div class="mt-3">
+                                                    <p class="mb-0"><small>1 night</small></p>
+                                                    <p class="original-price mb-0">₹ 4,504</p>
+                                                    <p class="current-price mb-0">₹ 2,246</p>
+                                                    <p class="text-muted mb-3"><small>+₹ 270 taxes and charges</small>
+                                                    </p>
+                                                    <button class="btn btn-primary bookBut w-100">BOOK NOW
+                                                        ›</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Hotel Linkway -->
+                    <div class="listing-card wow fadeInUp" data-wow-delay="0.5s">
+                        <div class="row g-0">
+                            <div class="col-md-4 col-lg-3">
+                                <div class="hotel-img-container">
+                                    <img src="../img/HotelRoom.jpg" alt="Hotel" class="hotel-img  m-3 img-fluid">
+                                    <button class="wishlist-btn">
+                                        <i class="far fa-heart"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-md-8 col-lg-9 main-card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12 col-lg-8">
+                                            <div class="d-flex align-items-center flex-wrap">
+                                                <h5 class="mb-0">FabHotel Powai Inn ⭐⭐⭐</h5>
+                                                <span class="featured-badge">Featured</span>
+                                            </div>
+                                            <div class="location-info mt-2">
+                                                <span>Powai, Mumbai</span>
+                                                <a href="#" class="ms-2">Show on map</a>
+                                                <span class="text-muted ms-2">5.3 km from centre</span>
+                                            </div>
+                                            <div class="deal-badge">Early 2025 Deal</div>
+                                            <div class="room-info mt-3">
+                                                <h6 class="mb-1">Deluxe Guest House</h6>
+                                                <p class="mb-2">2 BHK</p>
+                                                <p class="cancellation-info mb-1">
+                                                    <i class="fas fa-check"></i> Free cancellation
+                                                </p>
+                                                <p class="cancellation-info">
+                                                    <i class="fas fa-check"></i> No prepayment needed – pay at the
+                                                    property
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-lg-4 ">
+                                            <div class="price-info text-lg-end">
+                                                <div
+                                                    class="d-flex justify-content-between justify-content-lg-end align-items-center mb-2">
+                                                    <div class="d-flex align-items-center gap-2">
+                                                        <span class="text-muted">Review score</span>
+                                                        <span class="rating-badge">4.3</span>
+                                                    </div>
+
+                                                </div>
+                                                <div class="mt-3">
+                                                    <p class="mb-0"><small>1 night</small></p>
+                                                    <p class="original-price mb-0">₹ 4,504</p>
+                                                    <p class="current-price mb-0">₹ 2,246</p>
+                                                    <p class="text-muted mb-3"><small>+₹ 270 taxes and charges</small>
+                                                    </p>
+                                                    <button class="btn btn-primary bookBut w-100">BOOK NOW
+                                                        ›</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Super Hotel O Sakinaka -->
+                    <div class="listing-card wow fadeInUp" data-wow-delay="0.7s">
+                        <div class="row g-0">
+                            <div class="col-md-4 col-lg-3 ">
+                                <div class="hotel-img-container">
+                                    <img src="../img/HotelRoom.jpg" alt="Hotel" class="hotel-img  m-3 img-fluid">
+                                    <button class="wishlist-btn">
+                                        <i class="far fa-heart"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-md-8 col-lg-9 main-card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12 col-lg-8">
+                                            <div class="d-flex align-items-center flex-wrap">
+                                                <h5 class="mb-0">FabHotel Powai Inn ⭐⭐⭐</h5>
+                                                <span class="featured-badge">Featured</span>
+                                            </div>
+                                            <div class="location-info mt-2">
+                                                <span>Powai, Mumbai</span>
+                                                <a href="#" class="ms-2">Show on map</a>
+                                                <span class="text-muted ms-2">5.3 km from centre</span>
+                                            </div>
+                                            <div class="deal-badge">Early 2025 Deal</div>
+                                            <div class="room-info mt-3">
+                                                <h6 class="mb-1">Deluxe Guest House</h6>
+                                                <p class="mb-2">2 BHK</p>
+                                                <p class="cancellation-info mb-1">
+                                                    <i class="fas fa-check"></i> Free cancellation
+                                                </p>
+                                                <p class="cancellation-info">
+                                                    <i class="fas fa-check"></i> No prepayment needed – pay at the
+                                                    property
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-lg-4">
+                                            <div class="price-info text-lg-end mr-2">
+                                                <div
+                                                    class="d-flex justify-content-between justify-content-lg-end align-items-center mb-2">
+                                                    <div class="d-flex align-items-center gap-2">
+                                                        <span class="text-muted">Review score</span>
+                                                        <span class="rating-badge">4.3</span>
+                                                    </div>
+                                                </div>
+                                                <div class="mt-3">
+                                                    <p class="mb-0"><small>1 night</small></p>
+                                                    <p class="original-price mb-0">₹ 4,504</p>
+                                                    <p class="current-price mb-0">₹ 2,246</p>
+                                                    <p class="text-muted mb-3"><small>+₹ 270 taxes and charges</small>
+                                                    </p>
+                                                    <button class="btn btn-primary bookBut w-100">BOOK NOW
+                                                        ›</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Restaurant Booking Form -->
+                <div id="restaurant-form" class="booking-form" style="display: none;">
+                    <h1 class=" mb-4 wow fadeInUp" data-wow-delay="0.1s">Restaurant Booking</h1>
+
+                    <div class="listing-card wow fadeInUp" data-wow-delay="0.1s">
+                        <div class="row g-0">
+                            <div class="col-md-4 col-lg-3 ">
+                                <div class="hotel-img-container">
+                                    <img src="../img/HotelRoom.jpg" alt="Hotel" class="hotel-img  m-3 img-fluid">
+                                    <button class="wishlist-btn">
+                                        <i class="far fa-heart"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-md-8 col-lg-9 main-card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12 col-lg-8">
+                                            <div class="d-flex align-items-center flex-wrap">
+                                                <h5 class="mb-0">FabHotel Powai Inn ⭐⭐⭐</h5>
+                                                <span class="featured-badge">Featured</span>
+                                            </div>
+                                            <div class="location-info mt-2">
+                                                <span>Powai, Mumbai</span>
+                                                <a href="#" class="ms-2">Show on map</a>
+                                                <span class="text-muted ms-2">5.3 km from centre</span>
+                                            </div>
+                                            <div class="deal-badge">Early 2025 Deal</div>
+                                            <div class="room-info mt-3">
+                                                <h6 class="mb-1">Fast Food, Desserts</h6>
+                                                <p class="mb-2">Time: 11:00 AM to 11:00 PM
+                                                    5</p>
+                                                <p class="cancellation-info mb-1">
+                                                    <i class="fas fa-check"></i> Free cancellation
+                                                </p>
+                                                <p class="cancellation-info">
+                                                    <i class="fas fa-check"></i> No prepayment needed
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-lg-4">
+                                            <div class="price-info text-lg-end mr-2">
+                                                <div
+                                                    class="d-flex justify-content-between justify-content-lg-end align-items-center mb-2">
+                                                    <div class="d-flex align-items-center gap-2">
+                                                        <span class="text-muted">Review score</span>
+                                                        <span class="rating-badge">4.3</span>
+                                                    </div>
+                                                </div>
+                                                <div class="mt-3">
+                                                    <p class="mb-0"><small>1 night, 2 adults</small></p>
+                                                    <p class="original-price mb-0">₹ 4,504</p>
+                                                    <p class="current-price mb-0">₹ 2,246</p>
+                                                    <p class="text-muted mb-3"><small>+₹ 270 taxes and charges</small>
+                                                    </p>
+                                                    <button class="btn btn-primary bookBut w-100">BOOK NOW
+                                                        ›</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="listing-card wow fadeInUp" data-wow-delay="0.3s">
+                        <div class="row g-0">
+                            <div class="col-md-4 col-lg-3 ">
+                                <div class="hotel-img-container">
+                                    <img src="../img/HotelRoom.jpg" alt="Hotel" class="hotel-img  m-3 img-fluid">
+                                    <button class="wishlist-btn">
+                                        <i class="far fa-heart"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-md-8 col-lg-9 main-card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12 col-lg-8">
+                                            <div class="d-flex align-items-center flex-wrap">
+                                                <h5 class="mb-0">FabHotel Powai Inn ⭐⭐⭐</h5>
+                                                <span class="featured-badge">Featured</span>
+                                            </div>
+                                            <div class="location-info mt-2">
+                                                <span>Powai, Mumbai</span>
+                                                <a href="#" class="ms-2">Show on map</a>
+                                                <span class="text-muted ms-2">5.3 km from centre</span>
+                                            </div>
+                                            <div class="deal-badge">Early 2025 Deal</div>
+                                            <div class="room-info mt-3">
+                                                <h6 class="mb-1">Fast Food, Desserts</h6>
+                                                <p class="mb-2">Time: 11:00 AM to 11:00 PM
+                                                    5</p>
+                                                <p class="cancellation-info mb-1">
+                                                    <i class="fas fa-check"></i> Free cancellation
+                                                </p>
+                                                <p class="cancellation-info">
+                                                    <i class="fas fa-check"></i> No prepayment needed
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-lg-4">
+                                            <div class="price-info text-lg-end mr-2">
+                                                <div
+                                                    class="d-flex justify-content-between justify-content-lg-end align-items-center mb-2">
+                                                    <div class="d-flex align-items-center gap-2">
+                                                        <span class="text-muted">Review score</span>
+                                                        <span class="rating-badge">4.3</span>
+                                                    </div>
+                                                </div>
+                                                <div class="mt-3">
+                                                    <p class="mb-0"><small>1 night, 2 adults</small></p>
+                                                    <p class="original-price mb-0">₹ 4,504</p>
+                                                    <p class="current-price mb-0">₹ 2,246</p>
+                                                    <p class="text-muted mb-3"><small>+₹ 270 taxes and charges</small>
+                                                    </p>
+                                                    <button class="btn btn-primary bookBut w-100">BOOK NOW
+                                                        ›</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="listing-card wow fadeInUp" data-wow-delay="0.5s">
+                        <div class="row g-0">
+                            <div class="col-md-4 col-lg-3 ">
+                                <div class="hotel-img-container">
+                                    <img src="../img/HotelRoom.jpg" alt="Hotel" class="hotel-img  m-3 img-fluid">
+                                    <button class="wishlist-btn">
+                                        <i class="far fa-heart"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-md-8 col-lg-9 main-card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12 col-lg-8">
+                                            <div class="d-flex align-items-center flex-wrap">
+                                                <h5 class="mb-0">FabHotel Powai Inn ⭐⭐⭐</h5>
+                                                <span class="featured-badge">Featured</span>
+                                            </div>
+                                            <div class="location-info mt-2">
+                                                <span>Powai, Mumbai</span>
+                                                <a href="#" class="ms-2">Show on map</a>
+                                                <span class="text-muted ms-2">5.3 km from centre</span>
+                                            </div>
+                                            <div class="deal-badge">Early 2025 Deal</div>
+                                            <div class="room-info mt-3">
+                                                <h6 class="mb-1">Fast Food, Desserts</h6>
+                                                <p class="mb-2">Time: 11:00 AM to 11:00 PM
+                                                    5</p>
+                                                <p class="cancellation-info mb-1">
+                                                    <i class="fas fa-check"></i> Free cancellation
+                                                </p>
+                                                <p class="cancellation-info">
+                                                    <i class="fas fa-check"></i> No prepayment needed
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-lg-4">
+                                            <div class="price-info text-lg-end mr-2">
+                                                <div
+                                                    class="d-flex justify-content-between justify-content-lg-end align-items-center mb-2">
+                                                    <div class="d-flex align-items-center gap-2">
+                                                        <span class="text-muted">Review score</span>
+                                                        <span class="rating-badge">4.3</span>
+                                                    </div>
+                                                </div>
+                                                <div class="mt-3">
+                                                    <p class="mb-0"><small>1 night, 2 adults</small></p>
+                                                    <p class="original-price mb-0">₹ 4,504</p>
+                                                    <p class="current-price mb-0">₹ 2,246</p>
+                                                    <p class="text-muted mb-3"><small>+₹ 270 taxes and charges</small>
+                                                    </p>
+                                                    <button class="btn btn-primary bookBut w-100">BOOK NOW
+                                                        ›</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="listing-card wow fadeInUp" data-wow-delay="0.7s">
+                        <div class="row g-0">
+                            <div class="col-md-4 col-lg-3 ">
+                                <div class="hotel-img-container">
+                                    <img src="../img/HotelRoom.jpg" alt="Hotel" class="hotel-img  m-3 img-fluid">
+                                    <button class="wishlist-btn">
+                                        <i class="far fa-heart"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-md-8 col-lg-9 main-card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12 col-lg-8">
+                                            <div class="d-flex align-items-center flex-wrap">
+                                                <h5 class="mb-0">FabHotel Powai Inn ⭐⭐⭐</h5>
+                                                <span class="featured-badge">Featured</span>
+                                            </div>
+                                            <div class="location-info mt-2">
+                                                <span>Powai, Mumbai</span>
+                                                <a href="#" class="ms-2">Show on map</a>
+                                                <span class="text-muted ms-2">5.3 km from centre</span>
+                                            </div>
+                                            <div class="deal-badge">Early 2025 Deal</div>
+                                            <div class="room-info mt-3">
+                                                <h6 class="mb-1">Fast Food, Desserts</h6>
+                                                <p class="mb-2">Time: 11:00 AM to 11:00 PM
+                                                    5</p>
+                                                <p class="cancellation-info mb-1">
+                                                    <i class="fas fa-check"></i> Free cancellation
+                                                </p>
+                                                <p class="cancellation-info">
+                                                    <i class="fas fa-check"></i> No prepayment needed
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-lg-4">
+                                            <div class="price-info text-lg-end mr-2">
+                                                <div
+                                                    class="d-flex justify-content-between justify-content-lg-end align-items-center mb-2">
+                                                    <div class="d-flex align-items-center gap-2">
+                                                        <span class="text-muted">Review score</span>
+                                                        <span class="rating-badge">4.3</span>
+                                                    </div>
+                                                </div>
+                                                <div class="mt-3">
+                                                    <p class="mb-0"><small>1 night, 2 adults</small></p>
+                                                    <p class="original-price mb-0">₹ 4,504</p>
+                                                    <p class="current-price mb-0">₹ 2,246</p>
+                                                    <p class="text-muted mb-3"><small>+₹ 270 taxes and charges</small>
+                                                    </p>
+                                                    <button class="btn btn-primary bookBut w-100">BOOK NOW
+                                                        ›</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Reservation Start -->
+
+
+        <div class="container mt-2">
+            <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+                <h5 class="section-title ff-secondary text-center text-primary fw-normal">Popular</h5>
+                <h1>Browse by property type</h1>
+                <p class="mb-5">Travellers searching for India also booked these</p>
+            </div>
+
+            <div id="propertyCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="row text-center">
+                            <div class="col-md-3 property-card">
+                                <img src="../img/about-1.jpg" alt="Hotels">
+                                <h5 class="float-start m-2">Hotels</h5>
+                            </div>
+                            <div class="col-md-3 property-card">
+                                <img src="../img/about-1.jpg" alt="Apartments">
+                                <h5 class="float-start m-2">Apartments</h5>
+                            </div>
+                            <div class="col-md-3 property-card">
+                                <img src="../img/about-1.jpg" alt="Resorts">
+                                <h5 class="float-start m-2">Resorts</h5>
+                            </div>
+                            <div class="col-md-3 property-card">
+                                <img src="../img/about-1.jpg" alt="Villas">
+                                <h5 class="float-start m-2">Villas</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="row text-center">
+                            <div class="col-md-3 property-card">
+                                <img src="../img/about-2.jpg" alt="Cottages">
+                                <h5 class="float-start m-2">Cottages</h5>
+                            </div>
+                            <div class="col-md-3 property-card">
+                                <img src="../img/about-2.jpg" alt="Bungalows">
+                                <h5 class="float-start m-2">Bungalows</h5>
+                            </div>
+                            <div class="col-md-3 property-card">
+                                <img src="../img/about-2.jpg" alt="Guest Houses">
+                                <h5 class="float-start m-2">Guest Houses</h5>
+                            </div>
+                            <div class="col-md-3 property-card">
+                                <img src="../img/about-2.jpg " alt="Hostels">
+                                <h5 class="float-start m-2">Hostels</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#propertyCarousel"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#propertyCarousel"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                </button>
+            </div>
+        </div>
+
+
+
+        <div class="container mt-4">
+            <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+                <h5 class="section-title ff-secondary text-center text-primary fw-normal">Comming</h5>
+                <h1>Coming Soon</h1>
+            </div>
+            <div class="row g-3 mt-3">
+                <!-- First Div: Bungalows, Apartments, Chalets -->
+                <div class="col-md-4 d-flex flex-column gap-3">
+                    <div class="rental-card bg-image text-white"
+                        style="background-image: url('../img/312070895.webp');">
+                        <div class="overlay"></div>
+                        <h3 class="bungalow-text">Bungalows</h3>
+                    </div>
+                    <div class="d-flex gap-3">
+                        <div class="rental-card bg-light text-dark flex-fill">
+                            <i class="bi bi-building"></i>
+                            <h3>Apartments</h3>
+                        </div>
+                        <div class="rental-card bg-light text-dark flex-fill">
+                            <i class="bi bi-house"></i>
+                            <h3>Chalets</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Second Div: Villas (Full Width) -->
+                <div class="col-md-4">
+                    <div class="rental-card full-card"
+                        style="background-image: url('../img/3119949682.jpg'); height: 100%; ">
+                    </div>
+                </div>
+
+                <!-- Third Div: Camping & Boats, Houses -->
+                <div class="col-md-4 d-flex flex-column gap-3">
+                    <div class="rental-card bg-light-green text-success">
+                        <i class="bi bi-tent"></i>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="50px">
+                            <path
+                                d="M13.77.36.109 22.86A.75.75 0 0 0 .75 24h22.5a.75.75 0 0 0 .641-1.14L10.231.36a.75.75 0 0 0-1.283.78l13.66 22.5.642-1.14H.75l.641 1.14 13.661-22.5A.75.75 0 1 0 13.77.36m-2.426 15.294-4.018 7.232A.75.75 0 0 0 7.982 24h8.036a.75.75 0 0 0 .656-1.114l-4.018-7.232a.75.75 0 0 0-1.312 0m1.312.728h-1.312l4.018 7.232.656-1.114H7.982l.656 1.114z">
+                            </path>
+                        </svg>
+                        <h4>Camping & boats</h4>
+                    </div>
+                    <div class="rental-card bg-image text-white"
+                        style="background-image: url('../img/312072148.webp');">
+                        <div class="overlay">
+                            <h3 style="float: left; margin-top: 75px; margin-left: 20px;">Houses</h3>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- Footer Start -->
+        <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
+            <div class="container py-5">
+                <div class="row g-5">
+                    <div class="col-lg-3 col-md-6">
+                        <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4">Company</h4>
+                        <a class="btn btn-link" href="">About Us</a>
+                        <a class="btn btn-link" href="">Contact Us</a>
+                        <a class="btn btn-link" href="">Reservation</a>
+                        <a class="btn btn-link" href="">Privacy Policy</a>
+                        <a class="btn btn-link" href="">Terms & Condition</a>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4">Contact</h4>
+                        <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>123 Street,Ahmedabad,INDIA</p>
+                        <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+91 1234567890</p>
+                        <p class="mb-2"><i class="fa fa-envelope me-3"></i>Bookify@gmail.com</p>
+                        <div class="d-flex pt-2">
+                            <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-twitter"></i></a>
+                            <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-facebook-f"></i></a>
+                            <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-youtube"></i></a>
+                            <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4">Opening</h4>
+                        <h5 class="text-light fw-normal">Monday - Saturday</h5>
+                        <p>09AM - 09PM</p>
+                        <h5 class="text-light fw-normal">Sunday</h5>
+                        <p>10AM - 08PM</p>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4">Newsletter</h4>
+                        <p>Dolor amet sit justo amet elitr clita ipsum elitr est.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="copyright">
+                    <div class="row">
+                        <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                            &copy; <a class="border-bottom" href="#">Bookify</a>, All Right Reserved.
+                            Designed By <a class="border-bottom" href="#">Raj&Group</a><br><br>
+                        </div>
+                        <div class="col-md-6 text-center text-md-end">
+                            <div class="footer-menu">
+                                <a href="">Home</a>
+                                <a href="">Cookies</a>
+                                <a href="">Help</a>
+                                <a href="">FQAs</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer End -->
+    </div>
+    <script>
+        document.querySelectorAll('.booking-type-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                document.querySelectorAll('.booking-form').forEach(form => form.style.display = 'none');
+                document.getElementById(button.dataset.target).style.display = 'block';
+            });
+        });
+
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../lib/wow/wow.min.js"></script>
+    <script src="../lib/easing/easing.min.js"></script>
+    <script src="../lib/waypoints/waypoints.min.js"></script>
+    <script src="../lib/counterup/counterup.min.js"></script>
+    <script src="../lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="../lib/tempusdominus/js/moment.min.js"></script>
+    <script src="../lib/tempusdominus/js/moment-timezone.min.js"></script>
+    <script src="../lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="../js/main.js"></script>
+</body>
+
+</html>

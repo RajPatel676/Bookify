@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Booking</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&family=Pacifico&display=swap"
+        rel="stylesheet">
+
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.4/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+
+    <link href="../lib/animate/animate.min.css" rel="stylesheet">
+    <link href="../lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="../lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="../css/style.css" rel="stylesheet">
+
+    <style>
+        .carousel {
+            display: none;
+        }
+
+        .carousel.active {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid bg-white p-0">
+        <!-- Navbar & Hero Start -->
+        <div class="container-fluid position-relative p-0">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0 wow fadeInDown"
+                data-wow-delay="0.3s" id="navbar">
+                <a href="index.html" class="navbar-brand p-0">
+                    <h1 class="text-primary m-0"></i><span class="animated-text">Bookify</span></h1>
+                    <!-- <img src="img/logo.png" alt="Logo"> -->
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                    <span class="fa fa-bars"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto py-0 pe-4">
+                        <a href="index.html" class="nav-item nav-link">Home</a>
+                        <a href="about.html" class="nav-item nav-link">About</a>
+
+                        <a href="booking.html" class="nav-item nav-link active"><span
+                                class="animated-text2">Booking</span></a>
+                        <a href="contact.html" class="nav-item nav-link">Contact</a>
+                        <div id="profile2" style="padding: 34px 0px;">
+                            <!-- <button id="profile-button" style="display: none;  background: none;" class="nav-item">
+                                <i class="fa fa-user-circle" style="font-size: 25px;"></i>
+                            </button> -->
+                            <a href="profile.html" class="nav-item nav-link " id="profile-button">
+                                <i class="fa fa-user-circle" style="font-size: 25px;"></i>
+                            </a>
+                            <a href="login.html" id="login-button" class="btn btn-primary py-2 px-4"
+                                style="display: none;">Login</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="container-fluid py-5 bg-dark hero-header mb-5">
+                <div class="container text-center my-5 pt-5 pb-4">
+                    <h1 class="display-3 text-white mb-3 animated slideInDown"><span
+                            class="animated-text2">Booking</span></h1>
+                </div>
+            </div>
+        </div>
+        <!-- Navbar & Hero End -->
+
+        <div class="container mt-5">
+            <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+                <h5 class="section-title ff-secondary text-center text-primary fw-normal">Popular</h5>
+                <h1>What type of trip are you planning?</h1>
+                <p class="mb-5">Find destinations in India that best match your interests</p>
+            </div>
+
+            <div class="fillbut mb-4 wow fadeInUp ">
+                <button class="filter-btn active" data-target="cityCarousel">
+                    <i class="fas fa-city"></i> City
+                </button>
+                <button class="filter-btn" data-target="romanceCarousel">
+                    <i class="fas fa-heart"></i> Romance
+                </button>
+                <button class="filter-btn" data-target="outdoorsCarousel">
+                    <i class="fas fa-bicycle"></i> Outdoors
+                </button>
+                <button class="filter-btn" data-target="beachCarousel">
+                    <i class="fas fa-umbrella-beach"></i> Beach
+                </button>
+            </div>
+
+            <div id="cityCarousel" class="carousel slide active wow fadeInUp" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="destination-row">
+                            <div style="width: 18rem;" id="cardBooking">
+                                <img src="../img/about-1.jpg" class="card-img-top" alt="Surat">
+                                <div class="card-body">
+                                    <h5 class="card-title">CITY</h5>
+                                    <p class="card-text">208 km away</p>
+                                </div>
+                            </div>
+                            <div style="width: 18rem;" id="cardBooking">
+                                <img src="../img/about-1.jpg" class="card-img-top" alt="Jodhpur">
+                                <div class="card-body">
+                                    <h5 class="card-title">CITY</h5>
+                                    <p class="card-text">366 km away</p>
+                                </div>
+                            </div>
+                            <div style="width: 18rem;" id="cardBooking">
+                                <img src="../img/about-1.jpg" class="card-img-top" alt="Ahmedabad">
+                                <div class="card-body">
+                                    <h5 class="card-title">CITY</h5>
+                                    <p class="card-text">250 km away</p>
+                                </div>
+                            </div>
+                            <div style="width: 18rem;" id="cardBooking">
+                                <img src="../img/about-1.jpg" class="card-img-top" alt="Ahmedabad">
+                                <div class="card-body">
+                                    <h5 class="card-title">CITY</h5>
+                                    <p class="card-text">250 km away</p>
+                                </div>
+                            </div>
+                            <div style="width: 18rem;" id="cardBooking">
+                                <img src="../img/about-1.jpg" class="card-img-top" alt="Ahmedabad">
+                                <div class="card-body">
+                                    <h5 class="card-title">CITY</h5>
+                                    <p class="card-text">250 km away</p>
+                                </div>
+                            </div>
+                            <div style="width: 18rem;" id="cardBooking">
+                                <img src="../img/about-1.jpg" class="card-img-top" alt="Ahmedabad">
+                                <div class="card-body">
+                                    <h5 class="card-title">CITY</h5>
+                                    <p class="card-text">250 km away</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="destination-row">
+                            <div style="width: 18rem;" id="cardBooking">
+                                <img src="../img/about-1.jpg" class="card-img-top" alt="Surat">
+                                <div class="card-body">
+                                    <h5 class="card-title">CITY</h5>
+                                    <p class="card-text">208 km away</p>
+                                </div>
+                            </div>
+                            <div style="width: 18rem;" id="cardBooking">
+                                <img src="../img/about-1.jpg" class="card-img-top" alt="Jodhpur">
+                                <div class="card-body">
+                                    <h5 class="card-title">CITY</h5>
+                                    <p class="card-text">366 km away</p>
+                                </div>
+                            </div>
+                            <div style="width: 18rem;" id="cardBooking">
+                                <img src="../img/about-1.jpg" class="card-img-top" alt="Ahmedabad">
+                                <div class="card-body">
+                                    <h5 class="card-title">CITY</h5>
+                                    <p class="card-text">250 km away</p>
+                                </div>
+                            </div>
+                            <div style="width: 18rem;" id="cardBooking">
+                                <img src="../img/about-1.jpg" class="card-img-top" alt="Ahmedabad">
+                                <div class="card-body">
+                                    <h5 class="card-title">CITY</h5>
+                                    <p class="card-text">250 km away</p>
+                                </div>
+                            </div>
+                            <div style="width: 18rem;" id="cardBooking">
+                                <img src="../img/about-1.jpg" class="card-img-top" alt="Ahmedabad">
+                                <div class="card-body">
+                                    <h5 class="card-title">CITY</h5>
+                                    <p class="card-text">250 km away</p>
+                                </div>
+                            </div>
+                            <div style="width: 18rem;" id="cardBooking">
+                                <img src="../img/about-1.jpg" class="card-img-top" alt="Ahmedabad">
+                                <div class="card-body">
+                                    <h5 class="card-title">CITY</h5>
+                                    <p class="card-text">250 km away</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#cityCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#cityCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+
+            <!-- Romance Carousel -->
+            <div id="romanceCarousel" class="carousel slide " data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="destination-row">
+                            <div style="width: 18rem;" id="cardBooking">
+                                <img src="../img/about-1.jpg" class="card-img-top" alt="Udaipur">
+                                <div class="card-body">
+                                    <h5 class="card-title">Romance</h5>
+                                    <p class="card-text">380 km away</p>
+                                </div>
+                            </div>
+                            <div style="width: 18rem;" id="cardBooking">
+                                <img src="../img/about-1.jpg" class="card-img-top" alt="Jodhpur">
+                                <div class="card-body">
+                                    <h5 class="card-title">Romance</h5>
+                                    <p class="card-text">366 km away</p>
+                                </div>
+                            </div>
+                            <div style="width: 18rem;" id="cardBooking">
+                                <img src="../img/about-1.jpg" class="card-img-top" alt="Mount Abu">
+                                <div class="card-body">
+                                    <h5 class="card-title">Romance</h5>
+                                    <p class="card-text">320 km away</p>
+                                </div>
+                            </div>
+                            <div style="width: 18rem;" id="cardBooking">
+                                <img src="../img/about-1.jpg" class="card-img-top" alt="Mount Abu">
+                                <div class="card-body">
+                                    <h5 class="card-title">Romance</h5>
+                                    <p class="card-text">320 km away</p>
+                                </div>
+                            </div>
+                            <div style="width: 18rem;" id="cardBooking">
+                                <img src="../img/about-1.jpg" class="card-img-top" alt="Mount Abu">
+                                <div class="card-body">
+                                    <h5 class="card-title">Romance</h5>
+                                    <p class="card-text">320 km away</p>
+                                </div>
+                            </div>
+                            <div style="width: 18rem;" id="cardBooking">
+                                <img src="../img/about-1.jpg" class="card-img-top" alt="Mount Abu">
+                                <div class="card-body">
+                                    <h5 class="card-title">Romance</h5>
+                                    <p class="card-text">320 km away</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="destination-row">
+                            <div style="width: 18rem;" id="cardBooking">
+                                <img src="../img/about-1.jpg" class="card-img-top" alt="Dwarka">
+                                <div class="card-body">
+                                    <h5 class="card-title">Romance</h5>
+                                    <p class="card-text">381 km away</p>
+                                </div>
+                            </div>
+                            <div style="width: 18rem;" id="cardBooking">
+                                <img src="../img/about-1.jpg" class="card-img-top" alt="Pushkar">
+                                <div class="card-body">
+                                    <h5 class="card-title">Romance</h5>
+                                    <p class="card-text">425 km away</p>
+                                </div>
+                            </div>
+                            <div style="width: 18rem;" id="cardBooking">
+                                <img src="../img/about-1.jpg" class="card-img-top" alt="Jaisalmer">
+                                <div class="card-body">
+                                    <h5 class="card-title">Romance</h5>
+                                    <p class="card-text">520 km away</p>
+                                </div>
+                            </div>
+                            <div style="width: 18rem;" id="cardBooking">
+                                <img src="../img/about-1.jpg" class="card-img-top" alt="Jaisalmer">
+                                <div class="card-body">
+                                    <h5 class="card-title">Romance</h5>
+                                    <p class="card-text">520 km away</p>
+                                </div>
+                            </div>
+                            <div style="width: 18rem;" id="cardBooking">
+                                <img src="../img/about-1.jpg" class="card-img-top" alt="Jaisalmer">
+                                <div class="card-body">
+                                    <h5 class="card-title">Romance</h5>
+                                    <p class="card-text">520 km away</p>
+                                </div>
+                            </div>
+                            <div style="width: 18rem;" id="cardBooking">
+                                <img src="../img/about-1.jpg" class="card-img-top" alt="Jaisalmer">
+                                <div class="card-body">
+                                    <h5 class="card-title">Romance</h5>
+                                    <p class="card-text">520 km away</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#romanceCarousel"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#romanceCarousel"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+
+            <!-- Outdoors Carousel -->
+            <div id="outdoorsCarousel" class="carousel slide " data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="destination-row">
+                            <div style="width: 18rem;" id="cardBooking">
+                                <img src="../img/about-1.jpg" class="card-img-top" alt="Bhuj">
+                                <div class="card-body">
+                                    <h5 class="card-title">Outdoors</h5>
+                                    <p class="card-text">299 km away</p>
+                                </div>
+                            </div>
+                            <div style="width: 18rem;" id="cardBooking">
+                                <img src="../img/about-1.jpg" class="card-img-top" alt="Mount Abu">
+                                <div class="card-body">
+                                    <h5 class="card-title">Outdoors</h5>
+                                    <p class="card-text">320 km away</p>
+                                </div>
+                            </div>
+                            <div style="width: 18rem;" id="cardBooking">
+                                <img src="../img/about-1.jpg" class="card-img-top" alt="Rann of Kutch">
+                                <div class="card-body">
+                                    <h5 class="card-title">Outdoors</h5>
+                                    <p class="card-text">350 km away</p>
+                                </div>
+                            </div>
+                            <div style="width: 18rem;" id="cardBooking">
+                                <img src="../img/about-1.jpg" class="card-img-top" alt="Rann of Kutch">
+                                <div class="card-body">
+                                    <h5 class="card-title">Outdoors</h5>
+                                    <p class="card-text">350 km away</p>
+                                </div>
+                            </div>
+                            <div style="width: 18rem;" id="cardBooking">
+                                <img src="../img/about-1.jpg" class="card-img-top" alt="Rann of Kutch">
+                                <div class="card-body">
+                                    <h5 class="card-title">Outdoors</h5>
+                                    <p class="card-text">350 km away</p>
+                                </div>
+                            </div>
+                            <div style="width: 18rem;" id="cardBooking">
+                                <img src="../img/about-1.jpg" class="card-img-top" alt="Rann of Kutch">
+                                <div class="card-body">
+                                    <h5 class="card-title">Outdoors</h5>
+                                    <p class="card-text">350 km away</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="destination-row">
+                            <div style="width: 18rem;" id="cardBooking">
+                                <img src="../img/about-1.jpg" class="card-img-top" alt="Ajmer">
+                                <div class="card-body">
+                                    <h5 class="card-title">Outdoors</h5>
+                                    <p class="card-text">436 km away</p>
+                                </div>
+                            </div>
+                            <div style="width: 18rem;" id="cardBooking">
+                                <img src="../img/about-1.jpg" class="card-img-top" alt="Pushkar">
+                                <div class="card-body">
+                                    <h5 class="card-title">Outdoors</h5>
+                                    <p class="card-text">425 km away</p>
+                                </div>
+                            </div>
+                            <div style="width: 18rem;" id="cardBooking">
+                                <img src="../img/about-1.jpg" class="card-img-top" alt="Gir Forest">
+                                <div class="card-body">
+                                    <h5 class="card-title">Outdoors</h5>
+                                    <p class="card-text">390 km away</p>
+                                </div>
+                            </div>
+                            <div style="width: 18rem;" id="cardBooking">
+                                <img src="../img/about-1.jpg" class="card-img-top" alt="Gir Forest">
+                                <div class="card-body">
+                                    <h5 class="card-title">Outdoors</h5>
+                                    <p class="card-text">390 km away</p>
+                                </div>
+                            </div>
+                            <div style="width: 18rem;" id="cardBooking">
+                                <img src="../img/about-1.jpg" class="card-img-top" alt="Gir Forest">
+                                <div class="card-body">
+                                    <h5 class="card-title">Outdoors</h5>
+                                    <p class="card-text">390 km away</p>
+                                </div>
+                            </div>
+                            <div style="width: 18rem;" id="cardBooking">
+                                <img src="../img/about-1.jpg" class="card-img-top" alt="Gir Forest">
+                                <div class="card-body">
+                                    <h5 class="card-title">Outdoors</h5>
+                                    <p class="card-text">390 km away</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#outdoorsCarousel"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#outdoorsCarousel"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+
+            <!-- Beach Carousel -->
+            <div id="beachCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="destination-row">
+                            <div style="width: 18rem;" id="cardBooking">
+                                <img src="../img/about-1.jpg" class="card-img-top" alt="Dwarka">
+                                <div class="card-body">
+                                    <h5 class="card-title">Dwarka</h5>
+                                    <p class="card-text">381 km away</p>
+                                </div>
+                            </div>
+                            <div style="width: 18rem;" id="cardBooking">
+                                <img src="../img/about-1.jpg" class="card-img-top" alt="Dwarka">
+                                <div class="card-body">
+                                    <h5 class="card-title">Dwarka</h5>
+                                    <p class="card-text">381 km away</p>
+                                </div>
+                            </div>
+                            <div style="width: 18rem;" id="cardBooking">
+                                <img src="../img/about-1.jpg" class="card-img-top" alt="Dwarka">
+                                <div class="card-body">
+                                    <h5 class="card-title">Dwarka</h5>
+                                    <p class="card-text">381 km away</p>
+                                </div>
+                            </div>
+                            <div style="width: 18rem;" id="cardBooking">
+                                <img src="../img/about-1.jpg" class="card-img-top" alt="Dwarka">
+                                <div class="card-body">
+                                    <h5 class="card-title">Dwarka</h5>
+                                    <p class="card-text">381 km away</p>
+                                </div>
+                            </div>
+                            <div style="width: 18rem;" id="cardBooking">
+                                <img src="../img/about-1.jpg" class="card-img-top" alt="Dwarka">
+                                <div class="card-body">
+                                    <h5 class="card-title">Dwarka</h5>
+                                    <p class="card-text">381 km away</p>
+                                </div>
+                            </div>
+                            <div style="width: 18rem;" id="cardBooking">
+                                <img src="../img/about-1.jpg" class="card-img-top" alt="Dwarka">
+                                <div class="card-body">
+                                    <h5 class="card-title">Dwarka</h5>
+                                    <p class="card-text">381 km away</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item ">
+                        <div class="destination-row">
+                            <div style="width: 18rem;" id="cardBooking">
+                                <img src="../img/about-1.jpg" class="card-img-top" alt="Dwarka">
+                                <div class="card-body">
+                                    <h5 class="card-title">Dwarka</h5>
+                                    <p class="card-text">381 km away</p>
+                                </div>
+                            </div>
+                            <div style="width: 18rem;" id="cardBooking">
+                                <img src="../img/about-1.jpg" class="card-img-top" alt="Dwarka">
+                                <div class="card-body">
+                                    <h5 class="card-title">Dwarka</h5>
+                                    <p class="card-text">381 km away</p>
+                                </div>
+                            </div>
+                            <div style="width: 18rem;" id="cardBooking">
+                                <img src="../img/about-1.jpg" class="card-img-top" alt="Dwarka">
+                                <div class="card-body">
+                                    <h5 class="card-title">Dwarka</h5>
+                                    <p class="card-text">381 km away</p>
+                                </div>
+                            </div>
+                            <div style="width: 18rem;" id="cardBooking">
+                                <img src="../img/about-1.jpg" class="card-img-top" alt="Dwarka">
+                                <div class="card-body">
+                                    <h5 class="card-title">Dwarka</h5>
+                                    <p class="card-text">381 km away</p>
+                                </div>
+                            </div>
+                            <div style="width: 18rem;" id="cardBooking">
+                                <img src="../img/about-1.jpg" class="card-img-top" alt="Dwarka">
+                                <div class="card-body">
+                                    <h5 class="card-title">Dwarka</h5>
+                                    <p class="card-text">381 km away</p>
+                                </div>
+                            </div>
+                            <div style="width: 18rem;" id="cardBooking">
+                                <img src="../img/about-1.jpg" class="card-img-top" alt="Dwarka">
+                                <div class="card-body">
+                                    <h5 class="card-title">Dwarka</h5>
+                                    <p class="card-text">381 km away</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="carousel-control-prev" type="button" data-bs-target="#beachCarousel"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#beachCarousel"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+
+
+
+
+        <div class="container">
+            <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+                <h5 class="section-title ff-secondary text-center text-primary fw-normal">Popular</h5>
+                <h1>Trending destinations</h1>
+                <p class="mb-5">Travellers searching for India also booked these</p>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-12 col-lg-6 wow fadeInLeft tred" deley-duration="0.1s"
+                    onclick="window.location.href='mumbai.html'">
+                    <div class="destination-card large-card">
+                        <img src="../img/rd (1).jpg" alt="Mumbai cityscape" class="destination-img">
+                        <div class="destination-overlay">
+                            <h3 class="destination-title">
+                                Mumbai
+                                <img src="../img/india.png" alt="Indian flag" class="flag-icon">
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-6 wow fadeInRight tred" deley-duration="0.3s"
+                    onclick="window.location.href='mumbai.html'">
+                    <div class="destination-card large-card">
+                        <img src="../img/delhi.jpg" alt="New Delhi Humayun's Tomb" class="destination-img">
+                        <div class="destination-overlay">
+                            <h3 class="destination-title">
+                                New Delhi
+                                <img src="../img/india.png" alt="Indian flag" class="flag-icon">
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Jaipur Card -->
+                <div class="col-12 col-md-4 wow fadeInLeft tred" deley-duration="0.5s"
+                    onclick="window.location.href='mumbai.html'">
+                    <div class="destination-card">
+                        <img src="../img/jaipur.jpg" alt="Jaipur Amber Fort" class="destination-img">
+                        <div class="destination-overlay">
+                            <h3 class="destination-title">
+                                Jaipur
+                                <img src="../img/india.png" alt="Indian flag" class="flag-icon">
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4 wow fadeInUp tred" deley-duration="0.9s"
+                    onclick="window.location.href='mumbai.html'">
+                    <div class="destination-card">
+                        <img src="../img/kashmir.jpg" alt="Navi Mumbai street food" class="destination-img">
+                        <div class="destination-overlay">
+                            <h3 class="destination-title">
+                                Kashmir
+                                <img src="../img/india.png" alt="Indian flag" class="flag-icon">
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4 wow fadeInRight tred" deley-duration="0.7s"
+                    onclick="window.location.href='mumbai.html'">
+                    <div class="destination-card">
+                        <img src="../img/kerala.jpg" alt="Bangalore Vidhana Soudha" class="destination-img">
+                        <div class="destination-overlay">
+                            <h3 class="destination-title">
+                                Kerala
+                                <img src="../img/india.png" alt="Indian flag" class="flag-icon">
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid py-5 px-0 wow fadeInUp" data-wow-delay="0.1s">
+            <div class="row g-0">
+                <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+                    <h5 class="section-title ff-secondary text-center text-primary fw-normal">Booking</h5>
+                    <h1 class="mb-5">Inquiry</h1>
+                </div>
+                <div class="col-md-6">
+                    <div class="video">
+                        <button type="button" class="btn-play" data-bs-toggle="modal"
+                            data-src="https://www.youtube.com/embed/bBXhhTcCPJw" data-bs-target="#videoModal">
+                            <span></span>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-6 bg-dark d-flex align-items-center">
+                    <div class="p-5 wow fadeInUp" data-wow-delay="0.2s">
+                        <h5 class="section-title ff-secondary text-start text-primary fw-normal">Reservation</h5>
+                        <h1 class="text-white mb-4">Inquiry To <span class="animated-text2">Hotel</span></h1>
+                        <form>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="name" placeholder="Your Name">
+                                        <label for="name">Your Name</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="email" class="form-control" id="email" placeholder="Your Email">
+                                        <label for="email">Your Email</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating date" id="date3" data-target-input="nearest">
+                                        <input type="text" class="form-control datetimepicker-input" id="date"
+                                            placeholder="Select Date" data-target="#date3"
+                                            data-toggle="datetimepicker" />
+                                        <label for="date" class="form-label">Date & Time</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <select class="form-select" id="select1">
+                                            <option value="1">Mumbai</option>
+                                            <option value="2">Kashmir</option>
+                                            <option value="3">New Delhi</option>
+                                            <option value="3">Jaipur</option>
+                                            <option value="3">Kerala</option>
+                                        </select>
+                                        <label for="select1">Select City of Hotel</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <select class="form-select" id="select1">
+                                            <option value="1">People 1</option>
+                                            <option value="2">People 2</option>
+                                            <option value="3">People 3</option>
+                                        </select>
+                                        <label for="select1">Select Hotel</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <button class="btn btn-primary w-100 py-3 bookBut" type="submit">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content rounded-0">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Youtube Video</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="ratio ratio-16x9">
+                            <iframe class="embed-responsive-item" src="" id="video" allowfullscreen
+                                allowscriptaccess="always" allow="autoplay"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
+            <div class="container py-5">
+                <div class="row g-5">
+                    <div class="col-lg-3 col-md-6">
+                        <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4">Company</h4>
+                        <a class="btn btn-link" href="">About Us</a>
+                        <a class="btn btn-link" href="">Contact Us</a>
+                        <a class="btn btn-link" href="">Reservation</a>
+                        <a class="btn btn-link" href="">Privacy Policy</a>
+                        <a class="btn btn-link" href="">Terms & Condition</a>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4">Contact</h4>
+                        <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>123 Street,Ahmedabad,INDIA</p>
+                        <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+91 1234567890</p>
+                        <p class="mb-2"><i class="fa fa-envelope me-3"></i>Bookify@gmail.com</p>
+                        <div class="d-flex pt-2">
+                            <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-twitter"></i></a>
+                            <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-facebook-f"></i></a>
+                            <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-youtube"></i></a>
+                            <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4">Opening</h4>
+                        <h5 class="text-light fw-normal">Monday - Saturday</h5>
+                        <p>09AM - 09PM</p>
+                        <h5 class="text-light fw-normal">Sunday</h5>
+                        <p>10AM - 08PM</p>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4">Newsletter</h4>
+                        <p>Dolor amet sit justo amet elitr clita ipsum elitr est.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="copyright">
+                    <div class="row">
+                        <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                            &copy; <a class="border-bottom" href="#">Bookify</a>, All Right Reserved.
+                            Designed By <a class="border-bottom" href="#">Raj&Group</a><br><br>
+                        </div>
+                        <div class="col-md-6 text-center text-md-end">
+                            <div class="footer-menu">
+                                <a href="">Home</a>
+                                <a href="">Cookies</a>
+                                <a href="">Help</a>
+                                <a href="">FQAs</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script>
+        document.querySelectorAll('.booking-type-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                document.querySelectorAll('.booking-form').forEach(form => form.style.display = 'none');
+                document.getElementById(button.dataset.target).style.display = 'block';
+            });
+        });
+
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../lib/wow/wow.min.js"></script>
+    <script src="../lib/easing/easing.min.js"></script>
+    <script src="../lib/waypoints/waypoints.min.js"></script>
+    <script src="../lib/counterup/counterup.min.js"></script>
+    <script src="../lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="../lib/tempusdominus/js/moment.min.js"></script>
+    <script src="../lib/tempusdominus/js/moment-timezone.min.js"></script>
+    <script src="../lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="../js/main.js"></script>
+</body>
+
+</html>
