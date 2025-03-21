@@ -1,5 +1,6 @@
-Bookify (Booking System)  🎯
+📖 Bookify - Online Booking System
 
+📌 Description
 Bookify is an online booking system designed for seamless reservations of hotel rooms, restaurant tables, and guest houses. It provides users a convenient platform to search, compare, and book accommodations effortlessly. The system includes user authentication, real-time availability checks, and an intuitive interface for a smooth booking experience.
 
 Built with HTML, CSS for the frontend, Node.js and js for the backend, and MYSQL for data storage, Bookify ensures fast performance and scalability. The platform is designed to be responsive, making it accessible on desktop and mobile devices. 🚀
@@ -9,6 +10,20 @@ Built with HTML, CSS for the frontend, Node.js and js for the backend, and MYSQL
 ✔️ Real-time data sync  
 ✔️ Responsive design
 
+🏗 Tech Stack
+- 💻 Frontend: HTML, CSS  
+- 🖥️ Backend: Node.js  
+- 📦 Database: MYSQL  
+
+🤝 Contributing
+Contributions are welcome!  
+1. Fork the repo  
+2. Create a new branch  
+3. Make your changes  
+4. Submit a pull request 🎯
+
+📜 License
+This project is licensed under the MIT License.
 
 My project is run on localhost so do you want to run this following this step
 
