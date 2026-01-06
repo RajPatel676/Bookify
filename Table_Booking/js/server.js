@@ -105,32 +105,28 @@ app.use('/lib', express.static(path.join(__dirname, '..', 'lib'), {
     }
 }));
 
-// Serve static files from public directory (but protect HTML files)
-// Only serve non-HTML files directly, HTML files are handled by routes above
-app.use(express.static(path.join(__dirname, '..', 'public'), {
-    setHeaders: (res, filePath) => {
-        // Allow static assets (images, etc.) but HTML files are protected by routes
-        if (filePath.endsWith('.html')) {
-            // Don't serve HTML files through static middleware
-            // They should be handled by the routes above with authentication
-            return;
+// Middleware to protect HTML files before static file serving
+app.use((req, res, next) => {
+    // If requesting an HTML file, check authentication
+    if (req.path.endsWith('.html')) {
+        // Public HTML pages that don't require authentication
+        const publicPages = ['/login.html', '/signup.html', '/forgot-password.html', '/reset-password.html'];
+        
+        if (publicPages.includes(req.path)) {
+            // Public page, allow access
+            return next();
+        } else {
+            // Protected page, require authentication
+            return requireAuth(req, res, next);
         }
-    },
-    // Filter out HTML files from static serving
-    index: false
-}));
-
-// Catch-all for any HTML files not explicitly defined above - require authentication
-app.get('*.html', requireAuth, (req, res) => {
-    const fileName = path.basename(req.path);
-    const filePath = path.join(__dirname, '..', 'public', fileName);
-    // Check if file exists
-    if (fs.existsSync(filePath)) {
-        res.sendFile(filePath);
-    } else {
-        res.status(404).send('Page not found');
     }
+    // Not an HTML file, allow static file serving
+    next();
 });
+
+// Serve static files from public directory (images, etc.)
+// HTML files are handled by routes above or the middleware above
+app.use(express.static(path.join(__dirname, '..', 'public')));
 
 // MySQL Database Connection - COMMENTED OUT
 // const db = mysql.createConnection({
