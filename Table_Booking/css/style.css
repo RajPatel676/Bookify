@@ -25,6 +25,25 @@
     visibility: visible;
 }
 
+/* Navbar should always be visible - it's at the top of the page */
+#navbar,
+nav.navbar,
+nav.wow {
+    visibility: visible !important;
+}
+
+/* Service section should be visible - it's near the top, show immediately */
+.container-fluid.py-5 .wow,
+.service-item,
+.service-item .wow {
+    visibility: visible !important;
+}
+
+/* Make sure service items are visible */
+.row.g-4 .wow {
+    visibility: visible;
+}
+
 .back-to-top {
     position: fixed;
     display: none;
