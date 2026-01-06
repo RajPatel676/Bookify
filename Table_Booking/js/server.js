@@ -161,33 +161,24 @@ function initializeSessionStore() {
         return null;
     }
 
+    // Check if mongoose is connected
+    if (mongoose.connection.readyState !== 1) {
+        console.warn('Mongoose not connected yet, session store will use MemoryStore');
+        return null;
+    }
+
     try {
-        // Create session store with proper connection options
+        // Use mongoose connection instead of creating a new one - this avoids SSL issues
         const store = MongoStore.create({
-            mongoUrl: MONGODB_URI,
+            client: mongoose.connection.getClient(), // Use existing mongoose connection
             touchAfter: 24 * 3600, // Lazy session update (24 hours)
             ttl: 7 * 24 * 60 * 60, // Session expires after 7 days
-            // Connection options to handle SSL/TLS properly
-            mongoOptions: {
-                serverSelectionTimeoutMS: 10000,
-                socketTimeoutMS: 45000,
-                connectTimeoutMS: 10000,
-                // SSL/TLS options - MongoDB Atlas requires SSL
-                ssl: true,
-                sslValidate: true,
-                // Retry options
-                retryWrites: true,
-                w: 'majority',
-                // Use new URL parser and unified topology
-                useNewUrlParser: true,
-                useUnifiedTopology: true,
-            },
             // Auto-remove expired sessions
             autoRemove: 'native',
             // Don't throw errors on connection issues
             stringify: false,
         });
-        console.log('MongoDB session store initialized');
+        console.log('MongoDB session store initialized using mongoose connection');
         return store;
     } catch (err) {
         console.error('Error creating MongoDB session store:', err);
@@ -252,7 +243,7 @@ async function ensureMongoConnection() {
             });
             isConnected = true;
             console.log('Connected to MongoDB Atlas');
-            
+
             // Initialize session store after successful connection
             if (!sessionStore) {
                 sessionStore = initializeSessionStore();
@@ -261,7 +252,7 @@ async function ensureMongoConnection() {
                     console.log('Session store upgraded to MongoDB');
                 }
             }
-            
+
             return true;
         } catch (err) {
             console.error('MongoDB Atlas connection error:', err);
