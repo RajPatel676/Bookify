@@ -239,3 +239,17 @@ filterButtons.forEach(button => {
     // Also try after a short delay to ensure all scripts are loaded
     setTimeout(initWOW, 500);
 })();
+
+// Fallback: Ensure all content is visible after page loads (in case WOW.js fails to load)
+window.addEventListener('load', function() {
+    setTimeout(function() {
+        document.body.classList.add('loaded');
+        // Make sure all wow elements are visible
+        var wowElements = document.querySelectorAll('.wow');
+        wowElements.forEach(function(el) {
+            el.style.visibility = 'visible';
+            el.style.opacity = '1';
+        });
+        console.log('Fallback: Made ' + wowElements.length + ' elements visible');
+    }, 2000);
+});
