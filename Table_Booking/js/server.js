@@ -7,6 +7,10 @@ const path = require('path');
 // const mysql = require('mysql2'); // MySQL commented out - not using database
 // const bcrypt = require('bcrypt'); // bcrypt commented out - not using database
 
+// MongoDB Atlas - NEW CODE
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+
 const app = express();
 const PORT = 3000;
 
@@ -79,6 +83,47 @@ app.use(session({
 //     console.log('Connected to the database.');
 // });
 
+// MongoDB Atlas Connection - NEW CODE
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://rajpatel:HpReE24BZtapObk8@cluster0.hpw6hlv.mongodb.net/bookify?retryWrites=true&w=majority';
+
+mongoose.connect(MONGODB_URI, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    })
+    .then(() => {
+        console.log('Connected to MongoDB Atlas');
+    })
+    .catch((err) => {
+        console.error('MongoDB Atlas connection error:', err);
+    });
+
+// MongoDB User Schema - NEW CODE
+const userSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+        lowercase: true,
+        trim: true
+    },
+    password: {
+        type: String,
+        required: true,
+        minlength: 6
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
+    }
+});
+
+const User = mongoose.model('User', userSchema);
+
 // Serve login.html
 app.get('/login', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'public', 'login.html'));
@@ -134,14 +179,35 @@ app.post('/signup', async(req, res) => {
     //     );
     // });
 
-    // Mock response (database disabled)
-    res.json({ message: 'Signup endpoint - Database disabled' });
+    // MongoDB Atlas Signup - NEW CODE
+    try {
+        // Check if user already exists
+        const existingUser = await User.findOne({ email: email.toLowerCase() });
+        if (existingUser) {
+            return res.status(400).json({ message: 'Email already registered!' });
+        }
+
+        // Hash password
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        // Create new user
+        const newUser = new User({
+            name: name,
+            email: email.toLowerCase(),
+            password: hashedPassword
+        });
+
+        await newUser.save();
+        res.status(200).json({ message: 'Signup successful! Please login.' });
+    } catch (error) {
+        console.error('MongoDB signup error:', error);
+        res.status(500).json({ message: 'Error registering user. Please try again.' });
+    }
 });
 
 
-app.post('/login', (req, res) => {
+app.post('/login', async(req, res) => {
     const { email, password } = req.body;
-    req.session.userr = { email };
 
     // MySQL Database Query - COMMENTED OUT
     // db.query('SELECT * FROM Users WHERE email = ?', [email], async (err, results) => {
@@ -165,8 +231,31 @@ app.post('/login', (req, res) => {
     //     }
     // });
 
-    // Mock response (database disabled) - allowing login for testing
-    res.status(200).json({ message: 'Login successful! (Database disabled)', redirectUrl: '/index.html' });
+    // MongoDB Atlas Login - NEW CODE
+    try {
+        // Find user by email
+        const user = await User.findOne({ email: email.toLowerCase() });
+        if (!user) {
+            return res.status(404).json({ message: 'Email not found!' });
+        }
+
+        // Compare password
+        const match = await bcrypt.compare(password, user.password);
+        if (!match) {
+            return res.status(401).json({ message: 'Invalid password!' });
+        }
+
+        // Set session
+        req.session.userr = { email: user.email, name: user.name, id: user._id };
+
+        res.status(200).json({
+            message: 'Login successful!',
+            redirectUrl: '/index.html'
+        });
+    } catch (error) {
+        console.error('MongoDB login error:', error);
+        res.status(500).json({ message: 'Internal server error!' });
+    }
 });
 
 app.post('/forgot-password', (req, res) => {
@@ -255,6 +344,18 @@ app.get('/session-status', (req, res) => {
     } else {
         return res.json({ loggedIn: false });
     }
+});
+
+// Logout Endpoint - NEW CODE
+app.post('/logout', (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            console.error('Logout error:', err);
+            return res.status(500).json({ message: 'Error logging out' });
+        }
+        res.clearCookie('connect.sid');
+        res.status(200).json({ message: 'Logged out successfully' });
+    });
 });
 
 // Nodemailer transporter

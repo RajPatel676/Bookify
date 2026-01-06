@@ -55,12 +55,49 @@
                                 class="animated-text2">About</span></a>
                         <a href="booking.html" class="nav-item nav-link">booking</a>
                         <a href="contact.html" class="nav-item nav-link">Contact</a>
-                        <div id="profile2" style="padding: 34px 0px;">
-                            <a href="profile.html" class="nav-item nav-link " id="profile-button">
-                                <i class="fa fa-user-circle" style="font-size: 25px;"></i>
-                            </a>
-                            <a href="login.html" id="login-button" class="btn btn-primary py-2 px-4"
-                                style="display: none;">Login</a>
+                        <div id="profile2">
+                            <div class="profile-dropdown" id="profile-dropdown" style="display: none;">
+                                <button class="profile-dropdown-btn nav-item nav-link" id="profile-button" type="button">
+                                    <i class="fa fa-user-circle"></i>
+                                </button>
+                                <div class="profile-dropdown-menu" id="profile-menu">
+                                    <div class="profile-dropdown-header">
+                                        <div class="profile-avatar" id="profile-avatar">R</div>
+                                        <div class="profile-info">
+                                            <p class="profile-name" id="profile-name">Raj Patel</p>
+                                            <p class="profile-status">Genius Level 1</p>
+                                        </div>
+                                    </div>
+                                    <div class="profile-dropdown-body">
+                                        <a href="profile.html" class="profile-menu-item">
+                                            <i class="fa fa-user"></i>
+                                            <span>My Account</span>
+                                        </a>
+                                        <a href="booking.html" class="profile-menu-item">
+                                            <i class="fa fa-suitcase"></i>
+                                            <span>Booking and Trip</span>
+                                        </a>
+                                        <a href="#" class="profile-menu-item">
+                                            <i class="fa fa-wallet"></i>
+                                            <span>Reward and Wallet</span>
+                                        </a>
+                                        <a href="#" class="profile-menu-item">
+                                            <i class="fa fa-comments"></i>
+                                            <span>Review</span>
+                                        </a>
+                                        <a href="#" class="profile-menu-item">
+                                            <i class="fa fa-heart"></i>
+                                            <span>Save</span>
+                                        </a>
+                                        <a href="#" class="profile-menu-item signout" id="signout-btn">
+                                            <i class="fa fa-sign-out-alt"></i>
+                                            <span>Sign Out</span>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="profile-dropdown-overlay" id="profile-overlay"></div>
+                            </div>
+                            <a href="login.html" id="login-button" class="btn btn-primary py-2 px-4" style="display: none;">Login</a>
                         </div>
                     </div>
                 </div>
@@ -249,6 +286,74 @@
 
     <!-- Template Javascript -->
     <script src="/js/main.js"></script>
+
+    <!-- Profile Dropdown Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const profileButton = document.getElementById('profile-button');
+            const profileMenu = document.getElementById('profile-menu');
+            const profileOverlay = document.getElementById('profile-overlay');
+            const profileDropdown = document.getElementById('profile-dropdown');
+            const signoutBtn = document.getElementById('signout-btn');
+
+            if (profileButton) {
+                profileButton.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    profileMenu.classList.toggle('show');
+                    profileOverlay.classList.toggle('show');
+                });
+            }
+
+            if (profileOverlay) {
+                profileOverlay.addEventListener('click', function() {
+                    profileMenu.classList.remove('show');
+                    profileOverlay.classList.remove('show');
+                });
+            }
+
+            document.addEventListener('click', function(e) {
+                if (profileDropdown && !profileDropdown.contains(e.target)) {
+                    profileMenu.classList.remove('show');
+                    profileOverlay.classList.remove('show');
+                }
+            });
+
+            if (signoutBtn) {
+                signoutBtn.addEventListener('click', async function(e) {
+                    e.preventDefault();
+                    try {
+                        const response = await fetch('/logout', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' }
+                        });
+                        if (response.ok) {
+                            window.location.href = '/login.html';
+                        }
+                    } catch (error) {
+                        console.error('Logout error:', error);
+                        window.location.href = '/login.html';
+                    }
+                });
+            }
+
+            fetch('/check-auth')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.isLoggedIn && data.user) {
+                        const profileName = document.getElementById('profile-name');
+                        const profileAvatar = document.getElementById('profile-avatar');
+                        if (profileName && data.user.name) {
+                            profileName.textContent = data.user.name;
+                        }
+                        if (profileAvatar && data.user.name) {
+                            profileAvatar.textContent = data.user.name.charAt(0).toUpperCase();
+                        }
+                    }
+                })
+                .catch(error => console.error('Error fetching user data:', error));
+        });
+    </script>
 </body>
 
 </html>

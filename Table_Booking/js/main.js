@@ -80,7 +80,8 @@
 })(jQuery);
 
 window.onload = async () => {
-    const profileButton = document.getElementById('profile-button');
+    const profileDropdown = document.getElementById('profile-dropdown');
+    const profileDropdownMobile = document.getElementById('profile-dropdown-mobile');
     const loginButton = document.getElementById('login-button');
 
     try {
@@ -88,18 +89,14 @@ window.onload = async () => {
         const data = await response.json();
 
         if (data.isLoggedIn) {
-
-            // loginButton.style.display = 'none';
-            // profileButton.style.display = 'block';
-
-
-            profileButton.addEventListener('click', () => {
-                window.location.href = '/profile';
-            });
+            if (profileDropdown) profileDropdown.style.display = 'block';
+            if (profileDropdownMobile) profileDropdownMobile.style.display = 'block';
+            if (loginButton) loginButton.style.display = 'none';
         } else {
-            // User is not logged in
-            // loginButton.style.display = 'block';
-            profileButton.style.display = 'none';
+            if (profileDropdown) profileDropdown.style.display = 'none';
+            if (profileDropdownMobile) profileDropdownMobile.style.display = 'none';
+            if (loginButton) loginButton.style.display = 'inline-block';
+            if (loginButton) loginButton.style.margin = '0px 0px 0px 25px';
         }
     } catch (error) {
         console.error('Error checking auth status:', error);
@@ -109,17 +106,20 @@ window.onload = async () => {
 fetch('/session-status')
     .then(response => response.json())
     .then(data => {
-        const profileButton = document.getElementById('profile-button');
+        const profileDropdown = document.getElementById('profile-dropdown');
+        const profileDropdownMobile = document.getElementById('profile-dropdown-mobile');
         const loginButton = document.getElementById('login-button');
 
-        // If the user is logged in, show the profile icon
+        // If the user is logged in, show the profile dropdown
         if (data.loggedIn) {
-            profileButton.style.display = 'inline';
-            loginButton.style.display = 'none';
+            if (profileDropdown) profileDropdown.style.display = 'block';
+            if (profileDropdownMobile) profileDropdownMobile.style.display = 'block';
+            if (loginButton) loginButton.style.display = 'none';
         } else {
-            profileButton.style.display = 'none';
-            loginButton.style.display = 'inline';
-            loginButton.style.margin = '0px 0px 0px 25px';
+            if (profileDropdown) profileDropdown.style.display = 'none';
+            if (profileDropdownMobile) profileDropdownMobile.style.display = 'none';
+            if (loginButton) loginButton.style.display = 'inline-block';
+            if (loginButton) loginButton.style.margin = '0px 0px 0px 25px';
         }
     });
 
