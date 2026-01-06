@@ -132,7 +132,14 @@ app.use(session({
 // });
 
 // MongoDB Atlas Connection - NEW CODE
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://rajpatel:HpReE24BZtapObk8@cluster0.hpw6hlv.mongodb.net/bookify?retryWrites=true&w=majority';
+// IMPORTANT: Never hardcode credentials in source code!
+// Set MONGODB_URI as an environment variable in Vercel or use a .env file locally
+const MONGODB_URI = process.env.MONGODB_URI;
+
+if (!MONGODB_URI) {
+    console.error('ERROR: MONGODB_URI environment variable is not set!');
+    console.error('Please set MONGODB_URI in your Vercel environment variables or .env file.');
+}
 
 // Configure mongoose for serverless (Vercel)
 mongoose.set('bufferCommands', false);
@@ -143,10 +150,15 @@ let isConnected = false;
 
 // Function to ensure MongoDB connection
 async function ensureMongoConnection() {
+    if (!MONGODB_URI) {
+        console.error('MONGODB_URI is not set. Please configure it in environment variables.');
+        return false;
+    }
+
     if (isConnected && mongoose.connection.readyState === 1) {
         return true;
     }
-    
+
     if (mongoose.connection.readyState === 0) {
         try {
             await mongoose.connect(MONGODB_URI, {
@@ -166,7 +178,7 @@ async function ensureMongoConnection() {
             return false;
         }
     }
-    
+
     return mongoose.connection.readyState === 1;
 }
 
