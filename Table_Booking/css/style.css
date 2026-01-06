@@ -16,6 +16,15 @@
     font-weight: 700 !important;
 }
 
+/* WOW.js Animation Support - Hide elements initially */
+.wow {
+    visibility: hidden;
+}
+
+.wow.animated {
+    visibility: visible;
+}
+
 .back-to-top {
     position: fixed;
     display: none;
