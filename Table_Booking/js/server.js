@@ -111,7 +111,7 @@ app.use((req, res, next) => {
     if (req.path.endsWith('.html')) {
         // Public HTML pages that don't require authentication
         const publicPages = ['/login.html', '/signup.html', '/forgot-password.html', '/reset-password.html'];
-        
+
         if (publicPages.includes(req.path)) {
             // Public page, allow access
             return next();
@@ -147,19 +147,52 @@ if (!MONGODB_URI) {
 }
 
 // Session configuration - using MongoDB session store for production
+// We'll create the session store after mongoose connection is established
 const MongoStore = require('connect-mongo');
 
-// Configure session store - only use MongoDB store if MONGODB_URI is available
+// Configure session store - create it lazily to avoid SSL errors
+// For now, use MemoryStore and upgrade to MongoDB store after connection
 let sessionStore = null;
-if (MONGODB_URI) {
+
+// Function to initialize MongoDB session store (called after mongoose connection)
+function initializeSessionStore() {
+    if (!MONGODB_URI) {
+        console.warn('MONGODB_URI not set, using MemoryStore for sessions');
+        return null;
+    }
+
     try {
-        sessionStore = MongoStore.create({
+        // Create session store with proper connection options
+        const store = MongoStore.create({
             mongoUrl: MONGODB_URI,
             touchAfter: 24 * 3600, // Lazy session update (24 hours)
             ttl: 7 * 24 * 60 * 60, // Session expires after 7 days
+            // Connection options to handle SSL/TLS properly
+            mongoOptions: {
+                serverSelectionTimeoutMS: 10000,
+                socketTimeoutMS: 45000,
+                connectTimeoutMS: 10000,
+                // SSL/TLS options - MongoDB Atlas requires SSL
+                ssl: true,
+                sslValidate: true,
+                // Retry options
+                retryWrites: true,
+                w: 'majority',
+                // Use new URL parser and unified topology
+                useNewUrlParser: true,
+                useUnifiedTopology: true,
+            },
+            // Auto-remove expired sessions
+            autoRemove: 'native',
+            // Don't throw errors on connection issues
+            stringify: false,
         });
+        console.log('MongoDB session store initialized');
+        return store;
     } catch (err) {
         console.error('Error creating MongoDB session store:', err);
+        console.warn('Falling back to MemoryStore (sessions will not persist across restarts)');
+        return null;
     }
 }
 
@@ -262,9 +295,9 @@ function requireAuth(req, res, next) {
         // User is not authenticated, redirect to login page
         // For API requests, return JSON error
         if (req.headers['content-type'] && req.headers['content-type'].includes('application/json')) {
-            return res.status(401).json({ 
-                message: 'Authentication required', 
-                redirectUrl: '/login.html' 
+            return res.status(401).json({
+                message: 'Authentication required',
+                redirectUrl: '/login.html'
             });
         }
         // For HTML requests, redirect to login
