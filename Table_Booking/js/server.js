@@ -50,6 +50,47 @@ app.get('/js/search-filter.js', (req, res) => {
     res.sendFile(path.join(__dirname, 'search-filter.js'));
 });
 
+// Explicit routes for commonly accessed lib files
+app.get('/lib/counterup/counterup.min.js', (req, res) => {
+    res.setHeader('Content-Type', 'application/javascript');
+    res.sendFile(path.join(__dirname, '..', 'lib', 'counterup', 'counterup.min.js'));
+});
+
+app.get('/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js', (req, res) => {
+    res.setHeader('Content-Type', 'application/javascript');
+    res.sendFile(path.join(__dirname, '..', 'lib', 'tempusdominus', 'js', 'tempusdominus-bootstrap-4.min.js'));
+});
+
+app.get('/lib/tempusdominus/js/moment-timezone.min.js', (req, res) => {
+    res.setHeader('Content-Type', 'application/javascript');
+    res.sendFile(path.join(__dirname, '..', 'lib', 'tempusdominus', 'js', 'moment-timezone.min.js'));
+});
+
+app.get('/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css', (req, res) => {
+    res.setHeader('Content-Type', 'text/css');
+    res.sendFile(path.join(__dirname, '..', 'lib', 'tempusdominus', 'css', 'tempusdominus-bootstrap-4.min.css'));
+});
+
+app.get('/lib/animate/animate.min.css', (req, res) => {
+    res.setHeader('Content-Type', 'text/css');
+    res.sendFile(path.join(__dirname, '..', 'lib', 'animate', 'animate.min.css'));
+});
+
+app.get('/lib/owlcarousel/assets/owl.carousel.min.css', (req, res) => {
+    res.setHeader('Content-Type', 'text/css');
+    res.sendFile(path.join(__dirname, '..', 'lib', 'owlcarousel', 'assets', 'owl.carousel.min.css'));
+});
+
+app.get('/css/bootstrap.min.css', (req, res) => {
+    res.setHeader('Content-Type', 'text/css');
+    res.sendFile(path.join(__dirname, '..', 'css', 'bootstrap.min.css'));
+});
+
+app.get('/css/style.css', (req, res) => {
+    res.setHeader('Content-Type', 'text/css');
+    res.sendFile(path.join(__dirname, '..', 'css', 'style.css'));
+});
+
 app.use('/img', express.static(path.join(__dirname, '..', 'img')));
 
 // Serve lib directory with proper MIME types for JS and CSS files
