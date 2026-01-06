@@ -16,9 +16,32 @@
     font-weight: 700 !important;
 }
 
-/* WOW.js Animation Support - Let WOW.js handle visibility internally */
-/* WOW.js will automatically hide/show elements, so we don't need to hide them in CSS */
-/* This ensures all content is visible by default, and animations work on scroll */
+/* WOW.js Animation Support - Ensure content is visible by default */
+/* Elements are visible by default - WOW.js will animate them when scrolled into view */
+.wow {
+    /* Don't hide elements - let them be visible, WOW.js will animate them */
+    opacity: 1;
+    visibility: visible;
+}
+
+/* If WOW.js adds the animated class, ensure it's visible */
+.wow.animated {
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* Fallback: After 2 seconds, make sure all wow elements are visible (in case WOW.js didn't load) */
+@keyframes ensureVisible {
+    to {
+        visibility: visible;
+        opacity: 1;
+    }
+}
+
+/* Apply fallback animation after page load */
+body.loaded .wow {
+    animation: ensureVisible 0.1s forwards;
+}
 
 .back-to-top {
     position: fixed;
