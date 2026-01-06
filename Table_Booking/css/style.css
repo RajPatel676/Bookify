@@ -20,27 +20,48 @@
 .wow {
     /* Enable hardware acceleration for smooth animations */
     will-change: transform, opacity;
-    transform: translateZ(0);
-    -webkit-transform: translateZ(0);
+    transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
-    perspective: 1000px;
-    -webkit-perspective: 1000px;
-    
-    /* Smooth transitions */
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-    -webkit-transition: opacity 0.6s ease-out, transform 0.6s ease-out;
     
     /* Visible by default */
     opacity: 1;
     visibility: visible;
 }
 
-/* Animated state - ensure smooth rendering */
+/* Animated state - ensure smooth rendering and remove will-change after animation */
 .wow.animated {
     visibility: visible !important;
     opacity: 1 !important;
     will-change: auto;
+    transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
+}
+
+/* Optimize animate.css animations for GPU acceleration */
+.animated {
+    animation-duration: 0.8s;
+    animation-fill-mode: both;
+    -webkit-animation-duration: 0.8s;
+    -webkit-animation-fill-mode: both;
+}
+
+/* Specific animation optimizations */
+.fadeInUp,
+.fadeInDown,
+.fadeIn,
+.slideInLeft,
+.slideInRight,
+.zoomIn {
+    will-change: transform, opacity;
+    transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
+}
+
+/* Smooth scroll behavior */
+html {
+    scroll-behavior: smooth;
 }
 
 .back-to-top {
