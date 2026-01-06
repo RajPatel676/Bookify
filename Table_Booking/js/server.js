@@ -22,9 +22,10 @@ app.use('/css', express.static(path.join(__dirname, '..', 'css'), {
     }
 }));
 
-app.use('/js', express.static(path.join(__dirname, '..', 'js'), {
-    setHeaders: (res, path) => {
-        if (path.endsWith('.js')) {
+// Serve js directory - handle both main.js in js/ and other js files
+app.use('/js', express.static(path.join(__dirname), {
+    setHeaders: (res, filePath) => {
+        if (filePath.endsWith('.js')) {
             res.setHeader('Content-Type', 'application/javascript');
         }
     }
