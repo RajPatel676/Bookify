@@ -145,51 +145,82 @@ filterButtons.forEach(button => {
     });
 });
 
-// Initialize WOW.js after all scripts and DOM are fully loaded
-(function initWOW() {
-    // Check if WOW is available
-    if (typeof WOW !== "undefined") {
-        try {
-            // Initialize WOW.js with proper configuration
-            var wow = new WOW({
-                boxClass: 'wow',
-                animateClass: 'animated',
-                offset: 0,
-                mobile: true,
-                live: true,
-                scrollContainer: null
-            });
-            wow.init();
-            console.log('WOW.js initialized successfully');
-        } catch (e) {
-            console.error('Error initializing WOW.js:', e);
-        }
-    } else {
-        // If WOW is not loaded yet, wait and retry
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initWOW);
-        } else {
-            setTimeout(initWOW, 200);
+// Initialize WOW.js - ensure it loads after all scripts
+(function() {
+    var wowInitialized = false;
+    var retryCount = 0;
+    var maxRetries = 20; // Try for up to 2 seconds (20 * 100ms)
+    
+    function initWOW() {
+        retryCount++;
+        
+        // Check if WOW is available and not already initialized
+        if (typeof WOW !== "undefined" && !wowInitialized) {
+            try {
+                // Destroy any existing instance
+                if (window.wowInstance) {
+                    try {
+                        window.wowInstance = null;
+                    } catch(e) {}
+                }
+                
+                // Initialize WOW.js with proper configuration
+                window.wowInstance = new WOW({
+                    boxClass: 'wow',
+                    animateClass: 'animated',
+                    offset: 0,
+                    mobile: true,
+                    live: true,
+                    scrollContainer: null,
+                    callback: function(box) {
+                        // Callback when animation starts
+                        console.log('Animation started for:', box);
+                    }
+                });
+                
+                window.wowInstance.init();
+                wowInitialized = true;
+                window.wowInitialized = true;
+                console.log('✅ WOW.js initialized successfully');
+                console.log('Found ' + document.querySelectorAll('.wow').length + ' elements with .wow class');
+                
+                // Force a sync to trigger animations on visible elements
+                setTimeout(function() {
+                    if (window.wowInstance && typeof window.wowInstance.sync === 'function') {
+                        window.wowInstance.sync();
+                    }
+                    // Also trigger scroll event to check visible elements
+                    window.dispatchEvent(new Event('scroll'));
+                }, 200);
+                
+            } catch (e) {
+                console.error('❌ Error initializing WOW.js:', e);
+            }
+        } else if (typeof WOW === "undefined" && retryCount < maxRetries) {
+            // If WOW is not loaded yet, wait and retry
+            setTimeout(initWOW, 100);
+        } else if (retryCount >= maxRetries) {
+            console.error('❌ WOW.js failed to load after ' + maxRetries + ' attempts');
         }
     }
+    
+    // Try to initialize immediately if scripts are already loaded
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+        setTimeout(initWOW, 100);
+    }
+    
+    // Initialize when DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(initWOW, 100);
+        });
+    }
+    
+    // Initialize on window load as fallback
+    window.addEventListener('load', function() {
+        setTimeout(initWOW, 300);
+    });
+    
+    // Also try after a short delay to ensure all scripts are loaded
+    setTimeout(initWOW, 500);
 })();
-
-// Also initialize on window load as fallback
-window.addEventListener('load', function() {
-    if (typeof WOW !== "undefined" && !window.wowInitialized) {
-        try {
-            var wow = new WOW({
-                boxClass: 'wow',
-                animateClass: 'animated',
-                offset: 0,
-                mobile: true,
-                live: true
-            });
-            wow.init();
-            window.wowInitialized = true;
-            console.log('WOW.js initialized on window load');
-        } catch (e) {
-            console.error('Error initializing WOW.js on load:', e);
-        }
-    }
-});
