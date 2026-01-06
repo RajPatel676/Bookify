@@ -1,8 +1,8 @@
 (function ($) {
     "use strict";
 
-    // Initiate the wowjs
-    new WOW().init();
+    // Initiate the wowjs - will be initialized after page fully loads
+    // (Initialization moved to window.load event at bottom of file)
 
 
     // Sticky Navbar
@@ -145,6 +145,51 @@ filterButtons.forEach(button => {
     });
 });
 
-if (typeof WOW !== "undefined") {
-    new WOW().init();
-}
+// Initialize WOW.js after all scripts and DOM are fully loaded
+(function initWOW() {
+    // Check if WOW is available
+    if (typeof WOW !== "undefined") {
+        try {
+            // Initialize WOW.js with proper configuration
+            var wow = new WOW({
+                boxClass: 'wow',
+                animateClass: 'animated',
+                offset: 0,
+                mobile: true,
+                live: true,
+                scrollContainer: null
+            });
+            wow.init();
+            console.log('WOW.js initialized successfully');
+        } catch (e) {
+            console.error('Error initializing WOW.js:', e);
+        }
+    } else {
+        // If WOW is not loaded yet, wait and retry
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initWOW);
+        } else {
+            setTimeout(initWOW, 200);
+        }
+    }
+})();
+
+// Also initialize on window load as fallback
+window.addEventListener('load', function() {
+    if (typeof WOW !== "undefined" && !window.wowInitialized) {
+        try {
+            var wow = new WOW({
+                boxClass: 'wow',
+                animateClass: 'animated',
+                offset: 0,
+                mobile: true,
+                live: true
+            });
+            wow.init();
+            window.wowInitialized = true;
+            console.log('WOW.js initialized on window load');
+        } catch (e) {
+            console.error('Error initializing WOW.js on load:', e);
+        }
+    }
+});

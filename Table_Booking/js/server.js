@@ -31,7 +31,17 @@ app.use('/js', express.static(path.join(__dirname, '..', 'js'), {
 }));
 
 app.use('/img', express.static(path.join(__dirname, '..', 'img')));
-app.use('/lib', express.static(path.join(__dirname, '..', 'lib')));
+
+// Serve lib directory with proper MIME types for JS and CSS files
+app.use('/lib', express.static(path.join(__dirname, '..', 'lib'), {
+    setHeaders: (res, filePath) => {
+        if (filePath.endsWith('.js')) {
+            res.setHeader('Content-Type', 'application/javascript');
+        } else if (filePath.endsWith('.css')) {
+            res.setHeader('Content-Type', 'text/css');
+        }
+    }
+}));
 
 // Serve HTML files from public directory
 app.use(express.static(path.join(__dirname, '..', 'public')));
