@@ -28,20 +28,23 @@
 /* Navbar should always be visible - it's at the top of the page */
 #navbar,
 nav.navbar,
-nav.wow {
+nav.wow,
+.navbar.wow {
     visibility: visible !important;
 }
 
 /* Service section should be visible - it's near the top, show immediately */
-.container-fluid.py-5 .wow,
+.container-fluid.py-5 .wow:first-child,
 .service-item,
-.service-item .wow {
+.service-item .wow,
+.row.g-4 .wow {
     visibility: visible !important;
 }
 
-/* Make sure service items are visible */
-.row.g-4 .wow {
-    visibility: visible;
+/* Hero section content should be visible */
+.hero-header .wow,
+.bg-dark .wow {
+    visibility: visible !important;
 }
 
 .back-to-top {
