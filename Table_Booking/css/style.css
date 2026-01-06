@@ -4,6 +4,34 @@
     --dark: #0F172B;
 }
 
+/* Mobile Responsive Styles for Search Section */
+@media (max-width: 576px) {
+    .bg-dark .input-group-lg .form-control {
+        font-size: 14px;
+        padding: 0.5rem 0.75rem;
+    }
+    
+    .bg-dark .form-select-lg {
+        font-size: 14px;
+        padding: 0.5rem 0.75rem;
+    }
+    
+    .bg-dark .btn {
+        font-size: 14px;
+        padding: 0.5rem 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .bg-dark .input-group {
+        flex-wrap: nowrap;
+    }
+    
+    .bg-dark .input-group-text {
+        padding: 0.5rem 0.75rem;
+    }
+}
+
 .ff-secondary {
     font-family: 'Pacifico', cursive;
 }

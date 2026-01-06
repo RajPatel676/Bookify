@@ -86,29 +86,31 @@
         </div>
         <!-- Navbar & Hero End -->
 
-        <!-- Search Section - Integrated with Dark Blue Design -->
-        <div class="container-fluid bg-dark py-5 mb-5">
-            <div class="container">
-                <div class="row justify-content-center mb-4">
-                    <div class="col-lg-10">
+        <!-- Search Section - Integrated with Dark Blue Design (Mobile Responsive) -->
+        <div class="container-fluid bg-dark py-4 py-lg-5 mb-5">
+            <div class="container px-3 px-md-4">
+                <!-- Search Bar - Mobile Responsive -->
+                <div class="row justify-content-center mb-3 mb-lg-4">
+                    <div class="col-12 col-lg-10">
                         <div class="input-group input-group-lg wow fadeInUp" data-wow-delay="0.1s">
-                            <span class="input-group-text bg-primary text-white border-0">
+                            <span class="input-group-text bg-primary text-white border-0 d-none d-sm-inline-flex">
                                 <i class="fas fa-search"></i>
                             </span>
                             <input type="text" id="searchInput" class="form-control border-0" 
-                                   placeholder="Search hotels, restaurants, or destinations..." 
-                                   aria-label="Search" style="height: 60px;">
-                            <button class="btn btn-primary border-0" type="button" id="searchBtn" style="height: 60px; padding: 0 30px;">
-                                <i class="fas fa-search me-2"></i>SEARCH
+                                   placeholder="Search hotels, restaurants..." 
+                                   aria-label="Search" style="height: 50px; height: 60px;">
+                            <button class="btn btn-primary border-0" type="button" id="searchBtn" style="height: 50px; height: 60px; padding: 0 15px; padding: 0 30px;">
+                                <i class="fas fa-search d-sm-none"></i>
+                                <span class="d-none d-sm-inline"><i class="fas fa-search me-2"></i>SEARCH</span>
                             </button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Advanced Filters - Integrated Design -->
-                <div class="row justify-content-center g-3 wow fadeInUp" data-wow-delay="0.2s">
-                    <div class="col-lg-2 col-md-4 col-sm-6">
-                        <select class="form-select form-select-lg bg-white border-0" id="filterLocation" style="height: 50px;">
+                <!-- Advanced Filters - Mobile Responsive -->
+                <div class="row justify-content-center g-2 g-md-3 wow fadeInUp" data-wow-delay="0.2s">
+                    <div class="col-6 col-sm-6 col-md-4 col-lg-2">
+                        <select class="form-select form-select-lg bg-white border-0" id="filterLocation" style="height: 45px; height: 50px;">
                             <option value="">All Locations</option>
                             <option value="Mumbai">Mumbai</option>
                             <option value="Delhi">New Delhi</option>
@@ -117,40 +119,40 @@
                             <option value="Kerala">Kerala</option>
                         </select>
                     </div>
-                    <div class="col-lg-2 col-md-4 col-sm-6">
-                        <select class="form-select form-select-lg bg-white border-0" id="filterPrice" style="height: 50px;">
+                    <div class="col-6 col-sm-6 col-md-4 col-lg-2">
+                        <select class="form-select form-select-lg bg-white border-0" id="filterPrice" style="height: 45px; height: 50px;">
                             <option value="">All Prices</option>
                             <option value="0-500">₹0 - ₹500</option>
-                            <option value="500-1000">₹500 - ₹1,000</option>
-                            <option value="1000-2000">₹1,000 - ₹2,000</option>
-                            <option value="2000+">₹2,000+</option>
+                            <option value="500-1000">₹500 - ₹1K</option>
+                            <option value="1000-2000">₹1K - ₹2K</option>
+                            <option value="2000+">₹2K+</option>
                         </select>
                     </div>
-                    <div class="col-lg-2 col-md-4 col-sm-6">
-                        <select class="form-select form-select-lg bg-white border-0" id="filterRating" style="height: 50px;">
+                    <div class="col-6 col-sm-6 col-md-4 col-lg-2">
+                        <select class="form-select form-select-lg bg-white border-0" id="filterRating" style="height: 45px; height: 50px;">
                             <option value="">All Ratings</option>
                             <option value="5">5 Stars</option>
                             <option value="4">4+ Stars</option>
                             <option value="3">3+ Stars</option>
                         </select>
                     </div>
-                    <div class="col-lg-2 col-md-4 col-sm-6">
-                        <select class="form-select form-select-lg bg-white border-0" id="filterType" style="height: 50px;">
+                    <div class="col-6 col-sm-6 col-md-4 col-lg-2">
+                        <select class="form-select form-select-lg bg-white border-0" id="filterType" style="height: 45px; height: 50px;">
                             <option value="">All Types</option>
                             <option value="hotel">Hotel</option>
                             <option value="restaurant">Restaurant</option>
                             <option value="guesthouse">Guest House</option>
                         </select>
                     </div>
-                    <div class="col-lg-2 col-md-4 col-sm-6">
-                        <button class="btn btn-outline-light w-100 border-0" type="button" id="clearFilters" style="height: 50px;">
-                            <i class="fas fa-times me-2"></i>Clear
+                    <div class="col-12 col-sm-12 col-md-4 col-lg-2">
+                        <button class="btn btn-outline-light w-100 border-0" type="button" id="clearFilters" style="height: 45px; height: 50px;">
+                            <i class="fas fa-times me-2"></i>Clear Filters
                         </button>
                     </div>
                 </div>
                 <div class="row justify-content-center mt-3">
-                    <div class="col-lg-10">
-                        <span class="text-white text-center d-block" id="resultsCount">Showing all results</span>
+                    <div class="col-12 col-lg-10">
+                        <span class="text-white text-center d-block small" id="resultsCount">Showing all results</span>
                     </div>
                 </div>
             </div>
