@@ -1168,12 +1168,21 @@ div div div div .bookBut:hover {
 
 .carousel-inner {
     padding: 20px;
-    overflow: visible;
 }
 
 .carousel {
-    overflow: visible;
     position: relative;
+}
+
+/* Mobile only - enable overflow */
+@media (max-width: 768px) {
+    .carousel-inner {
+        overflow: visible;
+    }
+    
+    .carousel {
+        overflow: visible;
+    }
 }
 
 
@@ -1224,16 +1233,27 @@ div div div div .bookBut:hover {
     border-radius: 8px;
     overflow: hidden;
     transition: transform 0.3s ease;
-    flex-shrink: 0;
-    min-width: 280px;
-    max-width: 280px;
-    width: 280px;
+    width: 18rem;
 }
 
 #cardBooking img {
     width: 100%;
-    height: 200px;
+    height: auto;
     object-fit: cover;
+}
+
+/* Mobile responsive - only apply on mobile */
+@media (max-width: 768px) {
+    #cardBooking {
+        flex-shrink: 0;
+        min-width: 240px;
+        max-width: 240px;
+        width: 240px;
+    }
+    
+    #cardBooking img {
+        height: 200px;
+    }
 }
 
 #cardBooking:hover {
@@ -1265,7 +1285,24 @@ div div div div .bookBut:hover {
     padding: 20px 40px;
 }
 
-/* Mobile Responsive Styles for Carousel */
+/* Keep original desktop view - only change on mobile */
+@media (min-width: 769px) {
+    .carousel-item {
+        padding: 20px 40px;
+    }
+    
+    .destination-row {
+        overflow-x: visible;
+        overflow-y: visible;
+    }
+    
+    #cardBooking {
+        width: 18rem;
+        margin: 0 10px;
+    }
+}
+
+/* Mobile Responsive Styles for Carousel - Only affects mobile */
 @media (max-width: 768px) {
     .carousel {
         overflow: visible;
@@ -1372,29 +1409,37 @@ div div div div .bookBut:hover {
     display: flex;
     justify-content: flex-start;
     gap: 20px;
-    overflow-x: auto;
-    overflow-y: hidden;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: thin;
-    scrollbar-color: #FEA116 transparent;
-    padding: 10px 0 20px 0;
-    margin: 0 -10px;
-    padding-left: 10px;
-    padding-right: 10px;
+    overflow-x: visible;
+    overflow-y: visible;
 }
 
-.destination-row::-webkit-scrollbar {
-    height: 6px;
-}
-
-.destination-row::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-.destination-row::-webkit-scrollbar-thumb {
-    background-color: #FEA116;
-    border-radius: 10px;
+/* Enable horizontal scroll only on mobile */
+@media (max-width: 768px) {
+    .destination-row {
+        overflow-x: auto;
+        overflow-y: hidden;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+        scrollbar-color: #FEA116 transparent;
+        padding: 10px 0 20px 0;
+        margin: 0 -10px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    
+    .destination-row::-webkit-scrollbar {
+        height: 6px;
+    }
+    
+    .destination-row::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    
+    .destination-row::-webkit-scrollbar-thumb {
+        background-color: #FEA116;
+        border-radius: 10px;
+    }
 }
 
 .carousel-indicators {
