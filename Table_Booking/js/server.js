@@ -116,10 +116,33 @@ app.use(express.static(path.join(__dirname, '..', 'public')));
 // });
 
 
+// Session configuration - using MongoDB session store for production
+const MongoStore = require('connect-mongo');
+
+// Configure session store - only use MongoDB store if MONGODB_URI is available
+let sessionStore = null;
+if (MONGODB_URI) {
+    try {
+        sessionStore = MongoStore.create({
+            mongoUrl: MONGODB_URI,
+            touchAfter: 24 * 3600, // Lazy session update (24 hours)
+            ttl: 7 * 24 * 60 * 60, // Session expires after 7 days
+        });
+    } catch (err) {
+        console.error('Error creating MongoDB session store:', err);
+    }
+}
+
 app.use(session({
-    secret: 'rdp676',
+    secret: process.env.SESSION_SECRET || 'rdp676',
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false, // Changed to false for security
+    store: sessionStore || undefined, // Use MongoDB store if available, otherwise use default (MemoryStore for dev)
+    cookie: {
+        secure: process.env.NODE_ENV === 'production', // HTTPS only in production
+        httpOnly: true, // Prevents XSS attacks
+        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+    }
 }));
 
 // MySQL Database Connection - COMMENTED OUT
@@ -143,7 +166,7 @@ if (!MONGODB_URI) {
 
 // Configure mongoose for serverless (Vercel)
 mongoose.set('bufferCommands', false);
-mongoose.set('bufferMaxEntries', 0);
+// Note: bufferMaxEntries was removed in Mongoose 8.x, so we don't set it
 
 // Connection state
 let isConnected = false;
