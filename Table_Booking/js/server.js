@@ -240,13 +240,28 @@ async function ensureMongoConnection() {
             await mongoose.connect(MONGODB_URI, {
                 useNewUrlParser: true,
                 useUnifiedTopology: true,
-                serverSelectionTimeoutMS: 5000, // Timeout after 5s instead of 10s
+                serverSelectionTimeoutMS: 10000, // Timeout after 10s
                 socketTimeoutMS: 45000, // Close sockets after 45s of inactivity
                 maxPoolSize: 10, // Maintain up to 10 socket connections
                 minPoolSize: 1, // Maintain at least 1 socket connection
+                // SSL/TLS options for MongoDB Atlas
+                ssl: true,
+                sslValidate: true,
+                retryWrites: true,
+                w: 'majority',
             });
             isConnected = true;
             console.log('Connected to MongoDB Atlas');
+            
+            // Initialize session store after successful connection
+            if (!sessionStore) {
+                sessionStore = initializeSessionStore();
+                // Note: New sessions will use MongoDB store
+                if (sessionStore) {
+                    console.log('Session store upgraded to MongoDB');
+                }
+            }
+            
             return true;
         } catch (err) {
             console.error('MongoDB Atlas connection error:', err);
