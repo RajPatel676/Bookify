@@ -84,8 +84,7 @@ app.use(session({
 // });
 
 // MongoDB Atlas Connection - NEW CODE
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://rajpatel:HpReE24BZtapObk8@cluster0.hpw6hlv.mongodb.net/bookify?retryWrites=true&w=majority';
-
+const MONGODB_URI = process.env.MONGODB_URI
 mongoose.connect(MONGODB_URI, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
