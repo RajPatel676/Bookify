@@ -16,31 +16,31 @@
     font-weight: 700 !important;
 }
 
-/* WOW.js Animation Support - Ensure content is visible by default */
-/* Elements are visible by default - WOW.js will animate them when scrolled into view */
+/* WOW.js Animation Support - Optimized for smooth performance */
 .wow {
-    /* Don't hide elements - let them be visible, WOW.js will animate them */
+    /* Enable hardware acceleration for smooth animations */
+    will-change: transform, opacity;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    perspective: 1000px;
+    -webkit-perspective: 1000px;
+    
+    /* Smooth transitions */
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    -webkit-transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    
+    /* Visible by default */
     opacity: 1;
     visibility: visible;
 }
 
-/* If WOW.js adds the animated class, ensure it's visible */
+/* Animated state - ensure smooth rendering */
 .wow.animated {
     visibility: visible !important;
     opacity: 1 !important;
-}
-
-/* Fallback: After 2 seconds, make sure all wow elements are visible (in case WOW.js didn't load) */
-@keyframes ensureVisible {
-    to {
-        visibility: visible;
-        opacity: 1;
-    }
-}
-
-/* Apply fallback animation after page load */
-body.loaded .wow {
-    animation: ensureVisible 0.1s forwards;
+    will-change: auto;
 }
 
 .back-to-top {

@@ -145,111 +145,61 @@ filterButtons.forEach(button => {
     });
 });
 
-// Initialize WOW.js - ensure it loads after all scripts
+// Initialize WOW.js - Optimized for smooth performance
 (function() {
     var wowInitialized = false;
-    var retryCount = 0;
-    var maxRetries = 20; // Try for up to 2 seconds (20 * 100ms)
+    var initAttempted = false;
     
     function initWOW() {
-        retryCount++;
+        // Only try once to avoid multiple initializations
+        if (initAttempted) return;
+        initAttempted = true;
         
-        // Check if WOW is available and not already initialized
+        // Check if WOW is available
         if (typeof WOW !== "undefined" && !wowInitialized) {
             try {
-                // Destroy any existing instance
-                if (window.wowInstance) {
-                    try {
-                        window.wowInstance = null;
-                    } catch(e) {}
-                }
-                
-                // Initialize WOW.js with proper configuration
+                // Initialize WOW.js with optimized configuration for smooth animations
                 window.wowInstance = new WOW({
                     boxClass: 'wow',
                     animateClass: 'animated',
-                    offset: 0,
+                    offset: 50, // Start animation slightly before element enters viewport
                     mobile: true,
-                    live: true,
+                    live: false, // Disable live reload for better performance
                     scrollContainer: null,
                     callback: function(box) {
-                        // Callback when animation starts
-                        console.log('Animation started for:', box);
+                        // Minimal callback - no logging for better performance
                     }
                 });
                 
                 window.wowInstance.init();
                 wowInitialized = true;
                 window.wowInitialized = true;
-                console.log('✅ WOW.js initialized successfully');
-                console.log('Found ' + document.querySelectorAll('.wow').length + ' elements with .wow class');
                 
-                // Immediately show elements that are already in viewport (above the fold)
-                setTimeout(function() {
+                // Use requestAnimationFrame for smooth initial sync
+                requestAnimationFrame(function() {
                     if (window.wowInstance && typeof window.wowInstance.sync === 'function') {
                         window.wowInstance.sync();
                     }
-                    // Check and animate elements already visible
-                    var wowElements = document.querySelectorAll('.wow');
-                    wowElements.forEach(function(element) {
-                        var rect = element.getBoundingClientRect();
-                        var isVisible = rect.top < window.innerHeight && rect.bottom > 0;
-                        if (isVisible && !element.classList.contains('animated')) {
-                            element.classList.add('animated');
-                            // Trigger the animation class
-                            var animationClass = element.getAttribute('data-wow-animation') || 
-                                               element.className.match(/fadeIn\w+|slideIn\w+|zoomIn|bounceIn/);
-                            if (animationClass) {
-                                element.style.visibility = 'visible';
-                            }
-                        }
-                    });
-                    // Also trigger scroll event to check visible elements
-                    window.dispatchEvent(new Event('scroll'));
-                }, 100);
+                });
                 
             } catch (e) {
                 console.error('❌ Error initializing WOW.js:', e);
             }
-        } else if (typeof WOW === "undefined" && retryCount < maxRetries) {
-            // If WOW is not loaded yet, wait and retry
-            setTimeout(initWOW, 100);
-        } else if (retryCount >= maxRetries) {
-            console.error('❌ WOW.js failed to load after ' + maxRetries + ' attempts');
+        } else if (typeof WOW === "undefined") {
+            // Retry once after a short delay if WOW not loaded
+            setTimeout(function() {
+                if (typeof WOW !== "undefined" && !wowInitialized) {
+                    initWOW();
+                }
+            }, 200);
         }
     }
     
-    // Try to initialize immediately if scripts are already loaded
-    if (document.readyState === 'complete' || document.readyState === 'interactive') {
-        setTimeout(initWOW, 100);
-    }
-    
-    // Initialize when DOM is ready
+    // Initialize when DOM is ready (single initialization point)
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(initWOW, 100);
-        });
+        document.addEventListener('DOMContentLoaded', initWOW);
+    } else {
+        // DOM already loaded
+        initWOW();
     }
-    
-    // Initialize on window load as fallback
-    window.addEventListener('load', function() {
-        setTimeout(initWOW, 300);
-    });
-    
-    // Also try after a short delay to ensure all scripts are loaded
-    setTimeout(initWOW, 500);
 })();
-
-// Fallback: Ensure all content is visible after page loads (in case WOW.js fails to load)
-window.addEventListener('load', function() {
-    setTimeout(function() {
-        document.body.classList.add('loaded');
-        // Make sure all wow elements are visible
-        var wowElements = document.querySelectorAll('.wow');
-        wowElements.forEach(function(el) {
-            el.style.visibility = 'visible';
-            el.style.opacity = '1';
-        });
-        console.log('Fallback: Made ' + wowElements.length + ' elements visible');
-    }, 2000);
-});
