@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const cors = require('cors');
 const path = require('path');
+const fs = require('fs');
 // const mysql = require('mysql2'); // MySQL commented out - not using database
 // const bcrypt = require('bcrypt'); // bcrypt commented out - not using database
 
@@ -104,8 +105,32 @@ app.use('/lib', express.static(path.join(__dirname, '..', 'lib'), {
     }
 }));
 
-// Serve HTML files from public directory
-app.use(express.static(path.join(__dirname, '..', 'public')));
+// Serve static files from public directory (but protect HTML files)
+// Only serve non-HTML files directly, HTML files are handled by routes above
+app.use(express.static(path.join(__dirname, '..', 'public'), {
+    setHeaders: (res, filePath) => {
+        // Allow static assets (images, etc.) but HTML files are protected by routes
+        if (filePath.endsWith('.html')) {
+            // Don't serve HTML files through static middleware
+            // They should be handled by the routes above with authentication
+            return;
+        }
+    },
+    // Filter out HTML files from static serving
+    index: false
+}));
+
+// Catch-all for any HTML files not explicitly defined above - require authentication
+app.get('*.html', requireAuth, (req, res) => {
+    const fileName = path.basename(req.path);
+    const filePath = path.join(__dirname, '..', 'public', fileName);
+    // Check if file exists
+    if (fs.existsSync(filePath)) {
+        res.sendFile(filePath);
+    } else {
+        res.status(404).send('Page not found');
+    }
+});
 
 // MySQL Database Connection - COMMENTED OUT
 // const db = mysql.createConnection({
@@ -231,8 +256,32 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model('User', userSchema);
 
+// Authentication Middleware - Check if user is logged in
+function requireAuth(req, res, next) {
+    // Check if user is authenticated
+    if (req.session && req.session.userr) {
+        // User is authenticated, proceed to next middleware
+        return next();
+    } else {
+        // User is not authenticated, redirect to login page
+        // For API requests, return JSON error
+        if (req.headers['content-type'] && req.headers['content-type'].includes('application/json')) {
+            return res.status(401).json({ 
+                message: 'Authentication required', 
+                redirectUrl: '/login.html' 
+            });
+        }
+        // For HTML requests, redirect to login
+        return res.redirect('/login.html');
+    }
+}
+
+// Public routes - No authentication required
 // Serve login.html
 app.get('/login', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'public', 'login.html'));
+});
+app.get('/login.html', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'public', 'login.html'));
 });
 
@@ -240,21 +289,62 @@ app.get('/login', (req, res) => {
 app.get('/signup', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'public', 'signup.html'));
 });
-
-app.get('/navbar', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'public', 'navbar.html'));
+app.get('/signup.html', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'public', 'signup.html'));
 });
 
 app.get('/forgot-password', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'public', 'forgot-password.html'));
 });
+app.get('/forgot-password.html', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'public', 'forgot-password.html'));
+});
+
 app.get('/reset-password', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'public', 'reset-password.html'));
 });
+app.get('/reset-password.html', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'public', 'reset-password.html'));
+});
 
+// Protected routes - Authentication required
 // Serve index.html on the root route
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'public', 'index.html')); // Serve index.html from the public folder
+app.get('/', requireAuth, (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
+});
+app.get('/index.html', requireAuth, (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
+});
+
+app.get('/navbar', requireAuth, (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'public', 'navbar.html'));
+});
+app.get('/navbar.html', requireAuth, (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'public', 'navbar.html'));
+});
+
+app.get('/about.html', requireAuth, (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'public', 'about.html'));
+});
+
+app.get('/booking.html', requireAuth, (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'public', 'booking.html'));
+});
+
+app.get('/booking-details.html', requireAuth, (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'public', 'booking-details.html'));
+});
+
+app.get('/contact.html', requireAuth, (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'public', 'contact.html'));
+});
+
+app.get('/profile.html', requireAuth, (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'public', 'profile.html'));
+});
+
+app.get('/mumbai.html', requireAuth, (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'public', 'mumbai.html'));
 });
 
 
