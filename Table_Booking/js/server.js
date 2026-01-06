@@ -1,14 +1,11 @@
-
-
-
 const express = require('express');
 const nodemailer = require('nodemailer');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const cors = require('cors');
 const path = require('path');
-const mysql = require('mysql2');
-const bcrypt = require('bcrypt');
+// const mysql = require('mysql2'); // MySQL commented out - not using database
+// const bcrypt = require('bcrypt'); // bcrypt commented out - not using database
 
 const app = express();
 const PORT = 3000;
@@ -22,12 +19,13 @@ app.use('/js', express.static(path.join(__dirname, '..', 'js')));
 app.use('/img', express.static(path.join(__dirname, '..', 'img')));
 app.use('/lib', express.static(path.join(__dirname, '..', 'lib')));
 
-const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'usersystem',
-});
+// MySQL Database Connection - COMMENTED OUT
+// const db = mysql.createConnection({
+//     host: 'localhost',
+//     user: 'root',
+//     password: '',
+//     database: 'usersystem',
+// });
 
 
 app.use(session({
@@ -36,13 +34,14 @@ app.use(session({
     saveUninitialized: true,
 }));
 
-db.connect((err) => {
-    if (err) {
-        console.error('Database connection failed: ' + err.stack);
-        return;
-    }
-    console.log('Connected to the database.');
-});
+// MySQL Database Connection - COMMENTED OUT
+// db.connect((err) => {
+//     if (err) {
+//         console.error('Database connection failed: ' + err.stack);
+//         return;
+//     }
+//     console.log('Connected to the database.');
+// });
 
 // Serve login.html
 app.get('/login', (req, res) => {
@@ -71,32 +70,36 @@ app.get('/', (req, res) => {
 });
 
 
-// Signup Endpoint
-app.post('/signup', async (req, res) => {
+// Signup Endpoint - MySQL COMMENTED OUT
+app.post('/signup', async(req, res) => {
     const { name, email, password } = req.body;
 
-    // Check if user already exists
-    db.query('SELECT * FROM users WHERE email = ?', [email], async (err, results) => {
-        if (results.length > 0) {
-            return res.json({ message: 'Email already registered!' });
-        }
+    // MySQL Database Query - COMMENTED OUT
+    // // Check if user already exists
+    // db.query('SELECT * FROM users WHERE email = ?', [email], async (err, results) => {
+    //     if (results.length > 0) {
+    //         return res.json({ message: 'Email already registered!' });
+    //     }
 
-        // Hash password
-        const hashedPassword = await bcrypt.hash(password, 10);
+    //     // Hash password
+    //     const hashedPassword = await bcrypt.hash(password, 10);
 
-        // Insert new user
-        db.query(
-            'INSERT INTO Users (name, email, password) VALUES (?, ?, ?)',
-            [name, email, hashedPassword],
-            (err) => {
-                if (err) {
-                    console.error(err);
-                    return res.status(500).json({ message: 'Error registering user.' });
-                }
-                res.json({ message: 'Signup successful!' });
-            }
-        );
-    });
+    //     // Insert new user
+    //     db.query(
+    //         'INSERT INTO Users (name, email, password) VALUES (?, ?, ?)',
+    //         [name, email, hashedPassword],
+    //         (err) => {
+    //             if (err) {
+    //                 console.error(err);
+    //                 return res.status(500).json({ message: 'Error registering user.' });
+    //             }
+    //             res.json({ message: 'Signup successful!' });
+    //         }
+    //     );
+    // });
+
+    // Mock response (database disabled)
+    res.json({ message: 'Signup endpoint - Database disabled' });
 });
 
 
@@ -104,90 +107,102 @@ app.post('/login', (req, res) => {
     const { email, password } = req.body;
     req.session.userr = { email };
 
-    db.query('SELECT * FROM Users WHERE email = ?', [email], async (err, results) => {
-        if (err) {
-            return res.status(500).json({ message: 'Internal server error!' });
-        }
+    // MySQL Database Query - COMMENTED OUT
+    // db.query('SELECT * FROM Users WHERE email = ?', [email], async (err, results) => {
+    //     if (err) {
+    //         return res.status(500).json({ message: 'Internal server error!' });
+    //     }
 
-        if (results.length === 0) {
-            return res.status(404).json({ message: 'Email not found!' });
-        }
+    //     if (results.length === 0) {
+    //         return res.status(404).json({ message: 'Email not found!' });
+    //     }
 
-        const user = results[0];
-        const match = await bcrypt.compare(password, user.password);
+    //     const user = results[0];
+    //     const match = await bcrypt.compare(password, user.password);
 
-        if (!match) {
-            return res.status(401).json({ message: 'Invalid password!' });
-        }
-        if (!res.headersSent) {
-            res.status(200).json({ message: 'Login successful!', redirectUrl: '/index.html' });
-            // res.redirect('/navbar');
-        }
-    });
+    //     if (!match) {
+    //         return res.status(401).json({ message: 'Invalid password!' });
+    //     }
+    //     if (!res.headersSent) {
+    //         res.status(200).json({ message: 'Login successful!', redirectUrl: '/index.html' });
+    //         // res.redirect('/navbar');
+    //     }
+    // });
+
+    // Mock response (database disabled) - allowing login for testing
+    res.status(200).json({ message: 'Login successful! (Database disabled)', redirectUrl: '/index.html' });
 });
 
 app.post('/forgot-password', (req, res) => {
     const { email } = req.body;
 
-    db.query('SELECT * FROM users WHERE email = ?', [email], async (err, results) => {
-        if (err) {
-            return res.status(500).json({ message: 'Internal server error!' });
-        }
+    // MySQL Database Query - COMMENTED OUT
+    // db.query('SELECT * FROM users WHERE email = ?', [email], async (err, results) => {
+    //     if (err) {
+    //         return res.status(500).json({ message: 'Internal server error!' });
+    //     }
 
-        if (results.length === 0) {
-            return res.status(404).json({ message: 'Email not found!' });
-        }
+    //     if (results.length === 0) {
+    //         return res.status(404).json({ message: 'Email not found!' });
+    //     }
 
-        const transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: 'bookify676@gmail.com',
-                pass: 'utik aaed zdvx xrhi',
-            },
-        });
+    //     const transporter = nodemailer.createTransport({
+    //         service: 'gmail',
+    //         auth: {
+    //             user: 'bookify676@gmail.com',
+    //             pass: 'utik aaed zdvx xrhi',
+    //         },
+    //     });
 
-        const mailOptions = {
-            from: email,
-            to: email,
-            subject: 'Password Reset Request',
-            text: `Click the link to reset your password: http://localhost:3000/reset-password?email=${encodeURIComponent(email)}`,
-        };
+    //     const mailOptions = {
+    //         from: email,
+    //         to: email,
+    //         subject: 'Password Reset Request',
+    //         text: `Click the link to reset your password: http://localhost:3000/reset-password?email=${encodeURIComponent(email)}`,
+    //     };
 
-        transporter.sendMail(mailOptions, (error, info) => {
-            if (error) {
-                console.error(error);
-                return res.status(500).json({ message: 'Error sending password reset email.' });
-            }
-            res.status(200).json({ message: 'Password reset email sent! Please check your inbox.' });
-        });
-    });
+    //     transporter.sendMail(mailOptions, (error, info) => {
+    //         if (error) {
+    //             console.error(error);
+    //             return res.status(500).json({ message: 'Error sending password reset email.' });
+    //         }
+    //         res.status(200).json({ message: 'Password reset email sent! Please check your inbox.' });
+    //     });
+    // });
+
+    // Mock response (database disabled)
+    res.status(200).json({ message: 'Password reset email sent! (Database disabled)' });
 });
 
 app.post('/reset-password', (req, res) => {
     const { email, newPassword } = req.body;
 
-    db.query('SELECT * FROM users WHERE email = ?', [email], async (err, results) => {
-        if (err) {
-            return res.status(500).json({ message: 'Internal server error!' });
-        }
+    // MySQL Database Query - COMMENTED OUT
+    // db.query('SELECT * FROM users WHERE email = ?', [email], async (err, results) => {
+    //     if (err) {
+    //         return res.status(500).json({ message: 'Internal server error!' });
+    //     }
 
-        if (results.length === 0) {
-            return res.status(404).json({ message: 'Email not found!' });
-        }
+    //     if (results.length === 0) {
+    //         return res.status(404).json({ message: 'Email not found!' });
+    //     }
 
-        const hashedPassword = await bcrypt.hash(newPassword, 10);
+    //     const hashedPassword = await bcrypt.hash(newPassword, 10);
 
-        db.query('UPDATE users SET password = ? WHERE email = ?', [hashedPassword, email], (err) => {
-            if (err) {
-                console.error(err);
-                return res.status(500).json({ message: 'Error updating password.' });
-            }
-            if (!res.headersSent) {
-                res.status(200).json({ message: 'Password has been reset successfully!......', redirectUrl: '/login' });
-                // res.redirect('/login');
-            }
-        });
-    });
+    //     db.query('UPDATE users SET password = ? WHERE email = ?', [hashedPassword, email], (err) => {
+    //         if (err) {
+    //             console.error(err);
+    //             return res.status(500).json({ message: 'Error updating password.' });
+    //         }
+    //         if (!res.headersSent) {
+    //             res.status(200).json({ message: 'Password has been reset successfully!......', redirectUrl: '/login' });
+    //             // res.redirect('/login');
+    //         }
+    //     });
+    // });
+
+    // Mock response (database disabled)
+    res.status(200).json({ message: 'Password has been reset successfully! (Database disabled)', redirectUrl: '/login' });
 });
 
 app.get('/check-auth', (req, res) => {
@@ -216,7 +231,7 @@ const transporter = nodemailer.createTransport({
 });
 
 // Email sending route
-app.post('/send-email', async (req, res) => {
+app.post('/send-email', async(req, res) => {
     const { sender, subject, message, name } = req.body;
 
     if (!sender || !subject || !message || !name) {
