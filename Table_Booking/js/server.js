@@ -115,6 +115,15 @@ app.use(express.static(path.join(__dirname, '..', 'public')));
 //     database: 'usersystem',
 // });
 
+// MongoDB Atlas Connection - NEW CODE
+// IMPORTANT: Never hardcode credentials in source code!
+// Set MONGODB_URI as an environment variable in Vercel or use a .env file locally
+const MONGODB_URI = process.env.MONGODB_URI;
+
+if (!MONGODB_URI) {
+    console.error('ERROR: MONGODB_URI environment variable is not set!');
+    console.error('Please set MONGODB_URI in your Vercel environment variables or .env file.');
+}
 
 // Session configuration - using MongoDB session store for production
 const MongoStore = require('connect-mongo');
@@ -153,16 +162,6 @@ app.use(session({
 //     }
 //     console.log('Connected to the database.');
 // });
-
-// MongoDB Atlas Connection - NEW CODE
-// IMPORTANT: Never hardcode credentials in source code!
-// Set MONGODB_URI as an environment variable in Vercel or use a .env file locally
-const MONGODB_URI = process.env.MONGODB_URI;
-
-if (!MONGODB_URI) {
-    console.error('ERROR: MONGODB_URI environment variable is not set!');
-    console.error('Please set MONGODB_URI in your Vercel environment variables or .env file.');
-}
 
 // Configure mongoose for serverless (Vercel)
 mongoose.set('bufferCommands', false);
