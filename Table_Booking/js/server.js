@@ -12,12 +12,29 @@ const PORT = 3000;
 
 app.use(bodyParser.json());
 app.use(cors());
-app.use(express.static(path.join(__dirname, '..', 'public'))); // Serve the HTML file
 
-app.use('/css', express.static(path.join(__dirname, '..', 'css')));
-app.use('/js', express.static(path.join(__dirname, '..', 'js')));
+// Set MIME types for static files
+app.use('/css', express.static(path.join(__dirname, '..', 'css'), {
+    setHeaders: (res, path) => {
+        if (path.endsWith('.css')) {
+            res.setHeader('Content-Type', 'text/css');
+        }
+    }
+}));
+
+app.use('/js', express.static(path.join(__dirname, '..', 'js'), {
+    setHeaders: (res, path) => {
+        if (path.endsWith('.js')) {
+            res.setHeader('Content-Type', 'application/javascript');
+        }
+    }
+}));
+
 app.use('/img', express.static(path.join(__dirname, '..', 'img')));
 app.use('/lib', express.static(path.join(__dirname, '..', 'lib')));
+
+// Serve HTML files from public directory
+app.use(express.static(path.join(__dirname, '..', 'public')));
 
 // MySQL Database Connection - COMMENTED OUT
 // const db = mysql.createConnection({
