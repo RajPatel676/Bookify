@@ -5,8 +5,8 @@
   ],
   "routes": [
     {
-      "src": "/public/(.*)",
-      "dest": "/public/$1"
+      "src": "/(css|js|img|lib)/(.*)",
+      "dest": "js/server.js"
     },
     {
       "src": "/(.*)",
