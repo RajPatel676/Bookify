@@ -22,14 +22,22 @@ app.use('/css', express.static(path.join(__dirname, '..', 'css'), {
     }
 }));
 
-// Serve js directory - handle both main.js in js/ and other js files
+// Serve js directory - main.js is in the same directory as server.js
 app.use('/js', express.static(path.join(__dirname), {
     setHeaders: (res, filePath) => {
         if (filePath.endsWith('.js')) {
             res.setHeader('Content-Type', 'application/javascript');
         }
-    }
+    },
+    // Don't serve server.js through this route
+    index: false
 }));
+
+// Explicitly serve main.js
+app.get('/js/main.js', (req, res) => {
+    res.setHeader('Content-Type', 'application/javascript');
+    res.sendFile(path.join(__dirname, 'main.js'));
+});
 
 app.use('/img', express.static(path.join(__dirname, '..', 'img')));
 
