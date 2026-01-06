@@ -1175,6 +1175,26 @@ div div div div .bookBut:hover {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 10px 0;
+    -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 768px) {
+    .fillbut {
+        justify-content: flex-start;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    
+    .filter-btn {
+        margin-right: 8px;
+        padding: 6px 16px;
+        font-size: 14px;
+        white-space: nowrap;
+    }
 }
 
 .filter-btn {
@@ -1198,6 +1218,9 @@ div div div div .bookBut:hover {
     border-radius: 8px;
     overflow: hidden;
     transition: transform 0.3s ease;
+    flex-shrink: 0;
+    min-width: 280px;
+    max-width: 280px;
 }
 
 #cardBooking:hover {
@@ -1229,10 +1252,98 @@ div div div div .bookBut:hover {
     padding: 20px 40px;
 }
 
+/* Mobile Responsive Styles for Carousel */
+@media (max-width: 768px) {
+    .carousel-item {
+        padding: 15px 10px;
+    }
+    
+    #cardBooking {
+        min-width: 200px;
+        max-width: 200px;
+        margin: 0 8px;
+    }
+    
+    .destination-row {
+        gap: 15px;
+    }
+    
+    .carousel-control-prev,
+    .carousel-control-next {
+        width: 35px;
+        height: 35px;
+        opacity: 0.8;
+    }
+    
+    .carousel-control-prev {
+        left: -10px;
+    }
+    
+    .carousel-control-next {
+        right: -10px;
+    }
+}
+
+@media (max-width: 576px) {
+    .carousel-item {
+        padding: 10px 5px;
+    }
+    
+    #cardBooking {
+        min-width: 160px;
+        max-width: 160px;
+        margin: 0 5px;
+    }
+    
+    .destination-row {
+        gap: 10px;
+    }
+    
+    #cardBooking .card-title {
+        font-size: 16px;
+    }
+    
+    #cardBooking .card-text {
+        font-size: 12px;
+    }
+    
+    .carousel-control-prev,
+    .carousel-control-next {
+        width: 30px;
+        height: 30px;
+    }
+    
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        width: 15px;
+        height: 15px;
+    }
+}
+
 .destination-row {
     display: flex;
     justify-content: flex-start;
     gap: 20px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: #FEA116 transparent;
+    padding-bottom: 10px;
+}
+
+.destination-row::-webkit-scrollbar {
+    height: 6px;
+}
+
+.destination-row::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.destination-row::-webkit-scrollbar-thumb {
+    background-color: #FEA116;
+    border-radius: 10px;
 }
 
 .carousel-indicators {
