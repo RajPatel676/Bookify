@@ -255,11 +255,12 @@ app.post('/send-email', async(req, res) => {
     }
 });
 
-// Start the server
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-});
+// Start the server (only in development, not on Vercel)
+if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
+    app.listen(PORT, () => {
+        console.log(`Server is running on http://localhost:${PORT}`);
+    });
+}
 
-
-// Export Express app for serverless function
-//module.exports = app
+// Export Express app for serverless function (required for Vercel)
+module.exports = app;
