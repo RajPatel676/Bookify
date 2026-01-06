@@ -16,36 +16,9 @@
     font-weight: 700 !important;
 }
 
-/* WOW.js Animation Support - Hide elements initially */
-.wow {
-    visibility: hidden;
-}
-
-.wow.animated {
-    visibility: visible;
-}
-
-/* Navbar should always be visible - it's at the top of the page */
-#navbar,
-nav.navbar,
-nav.wow,
-.navbar.wow {
-    visibility: visible !important;
-}
-
-/* Service section should be visible - it's near the top, show immediately */
-.container-fluid.py-5 .wow:first-child,
-.service-item,
-.service-item .wow,
-.row.g-4 .wow {
-    visibility: visible !important;
-}
-
-/* Hero section content should be visible */
-.hero-header .wow,
-.bg-dark .wow {
-    visibility: visible !important;
-}
+/* WOW.js Animation Support - Let WOW.js handle visibility internally */
+/* WOW.js will automatically hide/show elements, so we don't need to hide them in CSS */
+/* This ensures all content is visible by default, and animations work on scroll */
 
 .back-to-top {
     position: fixed;

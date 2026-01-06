@@ -184,14 +184,29 @@ filterButtons.forEach(button => {
                 console.log('✅ WOW.js initialized successfully');
                 console.log('Found ' + document.querySelectorAll('.wow').length + ' elements with .wow class');
                 
-                // Force a sync to trigger animations on visible elements
+                // Immediately show elements that are already in viewport (above the fold)
                 setTimeout(function() {
                     if (window.wowInstance && typeof window.wowInstance.sync === 'function') {
                         window.wowInstance.sync();
                     }
+                    // Check and animate elements already visible
+                    var wowElements = document.querySelectorAll('.wow');
+                    wowElements.forEach(function(element) {
+                        var rect = element.getBoundingClientRect();
+                        var isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+                        if (isVisible && !element.classList.contains('animated')) {
+                            element.classList.add('animated');
+                            // Trigger the animation class
+                            var animationClass = element.getAttribute('data-wow-animation') || 
+                                               element.className.match(/fadeIn\w+|slideIn\w+|zoomIn|bounceIn/);
+                            if (animationClass) {
+                                element.style.visibility = 'visible';
+                            }
+                        }
+                    });
                     // Also trigger scroll event to check visible elements
                     window.dispatchEvent(new Event('scroll'));
-                }, 200);
+                }, 100);
                 
             } catch (e) {
                 console.error('❌ Error initializing WOW.js:', e);
