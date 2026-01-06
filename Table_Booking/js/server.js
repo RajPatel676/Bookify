@@ -17,16 +17,17 @@ const PORT = 3000;
 app.use(bodyParser.json());
 app.use(cors());
 
+// Serve static files FIRST - before any other routes
 // Set MIME types for static files
 app.use('/css', express.static(path.join(__dirname, '..', 'css'), {
-    setHeaders: (res, path) => {
-        if (path.endsWith('.css')) {
+    setHeaders: (res, filePath) => {
+        if (filePath.endsWith('.css')) {
             res.setHeader('Content-Type', 'text/css');
         }
     }
 }));
 
-// Serve js directory - main.js is in the same directory as server.js
+// Serve js directory - main.js and search-filter.js are in the same directory as server.js
 app.use('/js', express.static(path.join(__dirname), {
     setHeaders: (res, filePath) => {
         if (filePath.endsWith('.js')) {
@@ -41,6 +42,12 @@ app.use('/js', express.static(path.join(__dirname), {
 app.get('/js/main.js', (req, res) => {
     res.setHeader('Content-Type', 'application/javascript');
     res.sendFile(path.join(__dirname, 'main.js'));
+});
+
+// Explicitly serve search-filter.js
+app.get('/js/search-filter.js', (req, res) => {
+    res.setHeader('Content-Type', 'application/javascript');
+    res.sendFile(path.join(__dirname, 'search-filter.js'));
 });
 
 app.use('/img', express.static(path.join(__dirname, '..', 'img')));
