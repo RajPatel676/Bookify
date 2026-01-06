@@ -6,7 +6,7 @@
   "routes": [
     {
       "src": "/(css|js|img|lib)/(.*)",
-      "dest": "js/server.js"
+      "dest": "/$1/$2"
     },
     {
       "src": "/(.*)",
