@@ -9,7 +9,7 @@ const path = require('path');
 
 // MongoDB Atlas - NEW CODE
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs'); // Using bcryptjs instead of bcrypt for Vercel compatibility
 
 const app = express();
 const PORT = 3000;

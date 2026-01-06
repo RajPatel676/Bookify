@@ -16,7 +16,7 @@
       "express-session": "^1.18.1",
       "dotenv": "^16.4.7",
       "mongoose": "^8.0.3",
-      "bcrypt": "^5.1.1"
+      "bcryptjs": "^2.4.3"
     },
     "engines": {
       "node": "22.x"  
