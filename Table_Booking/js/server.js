@@ -132,17 +132,43 @@ app.use(session({
 // });
 
 // MongoDB Atlas Connection - NEW CODE
-const MONGODB_URI = process.env.MONGODB_URI
-mongoose.connect(MONGODB_URI, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-    })
-    .then(() => {
-        console.log('Connected to MongoDB Atlas');
-    })
-    .catch((err) => {
-        console.error('MongoDB Atlas connection error:', err);
-    });
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://rajpatel:HpReE24BZtapObk8@cluster0.hpw6hlv.mongodb.net/bookify?retryWrites=true&w=majority';
+
+// Configure mongoose for serverless (Vercel)
+mongoose.set('bufferCommands', false);
+mongoose.set('bufferMaxEntries', 0);
+
+// Connection state
+let isConnected = false;
+
+// Function to ensure MongoDB connection
+async function ensureMongoConnection() {
+    if (isConnected && mongoose.connection.readyState === 1) {
+        return true;
+    }
+    
+    if (mongoose.connection.readyState === 0) {
+        try {
+            await mongoose.connect(MONGODB_URI, {
+                useNewUrlParser: true,
+                useUnifiedTopology: true,
+                serverSelectionTimeoutMS: 5000, // Timeout after 5s instead of 10s
+                socketTimeoutMS: 45000, // Close sockets after 45s of inactivity
+                maxPoolSize: 10, // Maintain up to 10 socket connections
+                minPoolSize: 1, // Maintain at least 1 socket connection
+            });
+            isConnected = true;
+            console.log('Connected to MongoDB Atlas');
+            return true;
+        } catch (err) {
+            console.error('MongoDB Atlas connection error:', err);
+            isConnected = false;
+            return false;
+        }
+    }
+    
+    return mongoose.connection.readyState === 1;
+}
 
 // MongoDB User Schema - NEW CODE
 const userSchema = new mongoose.Schema({
@@ -228,6 +254,12 @@ app.post('/signup', async(req, res) => {
 
     // MongoDB Atlas Signup - NEW CODE
     try {
+        // Ensure MongoDB connection before query
+        const connected = await ensureMongoConnection();
+        if (!connected) {
+            return res.status(500).json({ message: 'Database connection failed. Please try again.' });
+        }
+
         // Check if user already exists
         const existingUser = await User.findOne({ email: email.toLowerCase() });
         if (existingUser) {
@@ -280,6 +312,12 @@ app.post('/login', async(req, res) => {
 
     // MongoDB Atlas Login - NEW CODE
     try {
+        // Ensure MongoDB connection before query
+        const connected = await ensureMongoConnection();
+        if (!connected) {
+            return res.status(500).json({ message: 'Database connection failed. Please try again.' });
+        }
+
         // Find user by email
         const user = await User.findOne({ email: email.toLowerCase() });
         if (!user) {
