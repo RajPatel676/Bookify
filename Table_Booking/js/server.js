@@ -168,17 +168,22 @@ function initializeSessionStore() {
     }
 
     try {
-        // Use mongoose connection instead of creating a new one - this avoids SSL issues
+        // For serverless, use mongoUrl instead of client to avoid connection issues
         const store = MongoStore.create({
-            client: mongoose.connection.getClient(), // Use existing mongoose connection
+            mongoUrl: MONGODB_URI,
             touchAfter: 24 * 3600, // Lazy session update (24 hours)
             ttl: 7 * 24 * 60 * 60, // Session expires after 7 days
-            // Auto-remove expired sessions
             autoRemove: 'native',
-            // Don't throw errors on connection issues
             stringify: false,
+            // Connection options
+            mongoOptions: {
+                useNewUrlParser: true,
+                useUnifiedTopology: true,
+                ssl: true,
+                sslValidate: true,
+            }
         });
-        console.log('MongoDB session store initialized using mongoose connection');
+        console.log('MongoDB session store initialized');
         return store;
     } catch (err) {
         console.error('Error creating MongoDB session store:', err);
@@ -272,6 +277,11 @@ async function ensureMongoConnection() {
             return true;
         } catch (err) {
             console.error('MongoDB Atlas connection error:', err.message || err);
+            console.error('Connection error details:', {
+                name: err.name,
+                code: err.code,
+                codeName: err.codeName
+            });
             isConnected = false;
             return false;
         }
@@ -449,7 +459,7 @@ app.post('/signup', async(req, res) => {
         // Ensure MongoDB connection before query
         const connected = await ensureMongoConnection();
         if (!connected) {
-            console.error('MongoDB connection failed in signup endpoint');
+            console.error('MongoDB connection failed in signup endpoint. Connection state:', mongoose.connection.readyState);
             return res.status(500).json({ message: 'Database connection failed. Please try again later.' });
         }
 
@@ -474,12 +484,21 @@ app.post('/signup', async(req, res) => {
         res.status(200).json({ message: 'Signup successful! Please login.' });
     } catch (error) {
         console.error('MongoDB signup error:', error);
+        console.error('Error details:', {
+            name: error.name,
+            message: error.message,
+            code: error.code,
+            stack: error.stack
+        });
         // Provide more specific error messages
         if (error.name === 'ValidationError') {
             return res.status(400).json({ message: 'Validation error: ' + Object.values(error.errors).map(e => e.message).join(', ') });
         }
         if (error.code === 11000) {
             return res.status(400).json({ message: 'Email already registered!' });
+        }
+        if (error.message && error.message.includes('buffering timed out')) {
+            return res.status(500).json({ message: 'Database connection timeout. Please try again.' });
         }
         res.status(500).json({ message: 'Error registering user. Please try again.' });
     }
