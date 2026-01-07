@@ -175,13 +175,6 @@ function initializeSessionStore() {
             ttl: 7 * 24 * 60 * 60, // Session expires after 7 days
             autoRemove: 'native',
             stringify: false,
-            // Connection options
-            mongoOptions: {
-                useNewUrlParser: true,
-                useUnifiedTopology: true,
-                ssl: true,
-                sslValidate: true,
-            }
         });
         console.log('MongoDB session store initialized');
         return store;
@@ -250,17 +243,10 @@ async function ensureMongoConnection() {
     if (mongoose.connection.readyState === 0 || mongoose.connection.readyState === 3) {
         try {
             await mongoose.connect(MONGODB_URI, {
-                useNewUrlParser: true,
-                useUnifiedTopology: true,
                 serverSelectionTimeoutMS: 10000, // Timeout after 10s
                 socketTimeoutMS: 45000, // Close sockets after 45s of inactivity
                 maxPoolSize: 10, // Maintain up to 10 socket connections
                 minPoolSize: 1, // Maintain at least 1 socket connection
-                // SSL/TLS options for MongoDB Atlas
-                ssl: true,
-                sslValidate: true,
-                retryWrites: true,
-                w: 'majority',
             });
             isConnected = true;
             console.log('Connected to MongoDB Atlas');
