@@ -139,7 +139,7 @@ app.use(express.static(path.join(__dirname, '..', 'public')));
 // MongoDB Atlas Connection - NEW CODE
 // IMPORTANT: Never hardcode credentials in source code!
 // Set MONGODB_URI as an environment variable in Vercel or use a .env file locally
-const MONGODB_URI = process.env.MONGODB_URI;
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://rajpatel:HpReE24BZtapObk8@cluster0.hpw6hlv.mongodb.net/bookify?retryWrites=true&w=majority';
 
 if (!MONGODB_URI) {
     console.error('ERROR: MONGODB_URI environment variable is not set!');
@@ -222,11 +222,27 @@ async function ensureMongoConnection() {
         return false;
     }
 
-    if (isConnected && mongoose.connection.readyState === 1) {
+    // Check if already connected
+    if (mongoose.connection.readyState === 1) {
         return true;
     }
 
-    if (mongoose.connection.readyState === 0) {
+    // If connecting, wait a bit
+    if (mongoose.connection.readyState === 2) {
+        // Wait for connection to complete (max 5 seconds)
+        for (let i = 0; i < 10; i++) {
+            await new Promise(resolve => setTimeout(resolve, 500));
+            if (mongoose.connection.readyState === 1) {
+                return true;
+            }
+            if (mongoose.connection.readyState === 0) {
+                break; // Connection failed, try to reconnect
+            }
+        }
+    }
+
+    // If disconnected or never connected, try to connect
+    if (mongoose.connection.readyState === 0 || mongoose.connection.readyState === 3) {
         try {
             await mongoose.connect(MONGODB_URI, {
                 useNewUrlParser: true,
@@ -255,12 +271,13 @@ async function ensureMongoConnection() {
 
             return true;
         } catch (err) {
-            console.error('MongoDB Atlas connection error:', err);
+            console.error('MongoDB Atlas connection error:', err.message || err);
             isConnected = false;
             return false;
         }
     }
 
+    // If we get here, connection state is unknown
     return mongoose.connection.readyState === 1;
 }
 
@@ -413,10 +430,27 @@ app.post('/signup', async(req, res) => {
 
     // MongoDB Atlas Signup - NEW CODE
     try {
+        // Input validation
+        if (!name || !email || !password) {
+            return res.status(400).json({ message: 'All fields are required (name, email, password).' });
+        }
+
+        // Validate email format
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            return res.status(400).json({ message: 'Please enter a valid email address.' });
+        }
+
+        // Validate password length
+        if (password.length < 6) {
+            return res.status(400).json({ message: 'Password must be at least 6 characters long.' });
+        }
+
         // Ensure MongoDB connection before query
         const connected = await ensureMongoConnection();
         if (!connected) {
-            return res.status(500).json({ message: 'Database connection failed. Please try again.' });
+            console.error('MongoDB connection failed in signup endpoint');
+            return res.status(500).json({ message: 'Database connection failed. Please try again later.' });
         }
 
         // Check if user already exists
@@ -430,15 +464,23 @@ app.post('/signup', async(req, res) => {
 
         // Create new user
         const newUser = new User({
-            name: name,
-            email: email.toLowerCase(),
+            name: name.trim(),
+            email: email.toLowerCase().trim(),
             password: hashedPassword
         });
 
         await newUser.save();
+        console.log('User created successfully:', newUser.email);
         res.status(200).json({ message: 'Signup successful! Please login.' });
     } catch (error) {
         console.error('MongoDB signup error:', error);
+        // Provide more specific error messages
+        if (error.name === 'ValidationError') {
+            return res.status(400).json({ message: 'Validation error: ' + Object.values(error.errors).map(e => e.message).join(', ') });
+        }
+        if (error.code === 11000) {
+            return res.status(400).json({ message: 'Email already registered!' });
+        }
         res.status(500).json({ message: 'Error registering user. Please try again.' });
     }
 });
