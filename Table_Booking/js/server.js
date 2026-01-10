@@ -195,6 +195,7 @@ app.use(session({
         secure: process.env.NODE_ENV === 'production', // HTTPS only in production
         httpOnly: true, // Prevents XSS attacks
         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+        sameSite: 'lax', // Works for same-origin requests
     }
 }));
 
@@ -569,10 +570,19 @@ app.post('/login', async(req, res) => {
 
         // Set session
         req.session.userr = { email: user.email, name: user.name, id: user._id };
-
-        res.status(200).json({
-            message: 'Login successful!',
-            redirectUrl: '/index.html'
+        
+        // Save session before sending response
+        req.session.save((err) => {
+            if (err) {
+                console.error('Error saving session:', err);
+                return res.status(500).json({ message: 'Error saving session. Please try again.' });
+            }
+            
+            console.log('✅ Session saved successfully for user:', user.email);
+            res.status(200).json({
+                message: 'Login successful!',
+                redirectUrl: '/index.html'
+            });
         });
     } catch (error) {
         console.error('MongoDB login error:', error);
