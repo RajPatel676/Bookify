@@ -18,6 +18,9 @@ const PORT = 3000;
 app.use(bodyParser.json());
 app.use(cors());
 
+// Trust proxy - important for Vercel
+app.set('trust proxy', 1);
+
 // Serve static files FIRST - before any other routes
 // Set MIME types for static files
 app.use('/css', express.static(path.join(__dirname, '..', 'css'), {
@@ -191,12 +194,14 @@ app.use(session({
     resave: false,
     saveUninitialized: false, // Changed to false for security
     store: sessionStore || undefined, // Use MongoDB store if available, otherwise use default (MemoryStore for dev)
+    name: 'connect.sid', // Explicit session cookie name
     cookie: {
-        secure: process.env.NODE_ENV === 'production', // HTTPS only in production
+        secure: true, // Always use secure cookies (Vercel uses HTTPS)
         httpOnly: true, // Prevents XSS attacks
         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-        sameSite: 'lax', // Works for same-origin requests
-    }
+        sameSite: 'lax', // Works for same-domain requests on Vercel
+        path: '/', // Ensure cookie is available for all paths
+    },
 }));
 
 // MySQL Database Connection - COMMENTED OUT
@@ -522,6 +527,8 @@ app.post('/signup', async(req, res) => {
             }
             
             console.log('✅ Session saved successfully for new user:', newUser.email);
+            console.log('✅ Session ID:', req.sessionID);
+            console.log('✅ Cookie settings:', req.session.cookie);
             
             // Check if request accepts HTML (form submission) or JSON (AJAX)
             const acceptsHtml = req.headers.accept && req.headers.accept.includes('text/html');
@@ -627,6 +634,8 @@ app.post('/login', async(req, res) => {
             }
             
             console.log('✅ Session saved successfully for user:', user.email);
+            console.log('✅ Session ID:', req.sessionID);
+            console.log('✅ Cookie settings:', req.session.cookie);
             
             // Check if request accepts HTML (form submission) or JSON (AJAX)
             const acceptsHtml = req.headers.accept && req.headers.accept.includes('text/html');
