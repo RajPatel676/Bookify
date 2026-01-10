@@ -395,10 +395,14 @@
                     messageDiv.style.color = '#10b981';
                     messageDiv.style.background = 'rgba(16, 185, 129, 0.1)';
                     messageDiv.textContent = data.message || 'Login successful!';
-                    // Wait a bit longer to ensure session cookie is set
+                    
+                    // Redirect after a short delay to ensure session cookie is set
                     setTimeout(() => {
-                        window.location.href = data.redirectUrl || '/index.html';
-                    }, 1500);
+                        const redirectUrl = data.redirectUrl || '/index.html';
+                        console.log('Redirecting to:', redirectUrl);
+                        // Use replace instead of href to avoid adding to browser history
+                        window.location.replace(redirectUrl);
+                    }, 500);
                 } else {
                     messageDiv.style.color = '#ef4444';
                     messageDiv.style.background = 'rgba(239, 68, 68, 0.1)';

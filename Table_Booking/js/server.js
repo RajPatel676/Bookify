@@ -345,11 +345,19 @@ function requireAuth(req, res, next) {
 }
 
 // Public routes - No authentication required
-// Serve login.html
+// Serve login.html - redirect if already logged in
 app.get('/login', (req, res) => {
+    if (req.session && req.session.userr) {
+        // Already logged in, redirect to home
+        return res.redirect('/index.html');
+    }
     res.sendFile(path.join(__dirname, '..', 'public', 'login.html'));
 });
 app.get('/login.html', (req, res) => {
+    if (req.session && req.session.userr) {
+        // Already logged in, redirect to home
+        return res.redirect('/index.html');
+    }
     res.sendFile(path.join(__dirname, '..', 'public', 'login.html'));
 });
 
@@ -570,15 +578,18 @@ app.post('/login', async(req, res) => {
 
         // Set session
         req.session.userr = { email: user.email, name: user.name, id: user._id };
+        console.log('📝 Session data set for user:', user.email);
         
         // Save session before sending response
         req.session.save((err) => {
             if (err) {
-                console.error('Error saving session:', err);
+                console.error('❌ Error saving session:', err);
                 return res.status(500).json({ message: 'Error saving session. Please try again.' });
             }
             
             console.log('✅ Session saved successfully for user:', user.email);
+            console.log('✅ Redirecting to /index.html');
+            
             res.status(200).json({
                 message: 'Login successful!',
                 redirectUrl: '/index.html'
