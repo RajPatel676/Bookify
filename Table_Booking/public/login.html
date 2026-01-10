@@ -394,20 +394,21 @@
                 });
 
                 const data = await response.json();
-                if (response.ok && data.success) {
+                if (response.ok) {
                     messageDiv.style.color = '#10b981';
                     messageDiv.style.background = 'rgba(16, 185, 129, 0.1)';
                     messageDiv.textContent = data.message || 'Login successful!';
                     
-                    // Redirect immediately - session is already saved on server
+                    // Redirect to home page - session is already saved on server
                     const redirectUrl = data.redirectUrl || '/index.html';
                     console.log('✅ Login successful, redirecting to:', redirectUrl);
+                    console.log('Response data:', data);
                     
-                    // Use a small delay to ensure message is visible
+                    // Wait a bit longer to ensure session cookie is set
                     setTimeout(() => {
                         // Force a full page reload to ensure session cookie is sent
                         window.location.href = redirectUrl;
-                    }, 500);
+                    }, 1000);
                 } else {
                     messageDiv.style.color = '#ef4444';
                     messageDiv.style.background = 'rgba(239, 68, 68, 0.1)';

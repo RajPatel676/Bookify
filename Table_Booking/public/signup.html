@@ -392,7 +392,7 @@
 
                 const data = await response.json();
 
-                if (response.ok && data.success) {
+                if (response.ok) {
                     messageDiv.style.color = '#10b981';
                     messageDiv.style.background = 'rgba(16, 185, 129, 0.1)';
                     messageDiv.textContent = data.message || 'Signup successful!';
@@ -400,10 +400,12 @@
                     // Redirect to home page - user is automatically logged in
                     const redirectUrl = data.redirectUrl || '/index.html';
                     console.log('✅ Signup successful, redirecting to home page:', redirectUrl);
+                    console.log('Response data:', data);
                     
+                    // Wait a bit longer to ensure session cookie is set
                     setTimeout(() => {
                         window.location.href = redirectUrl;
-                    }, 500);
+                    }, 1000);
                 } else {
                     messageDiv.style.color = '#ef4444';
                     messageDiv.style.background = 'rgba(239, 68, 68, 0.1)';
