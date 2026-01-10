@@ -189,6 +189,9 @@ function initializeSessionStore() {
     }
 }
 
+// Detect if running on Vercel
+const isVercel = process.env.VERCEL === '1' || process.env.VERCEL_ENV;
+
 app.use(session({
     secret: process.env.SESSION_SECRET || 'rdp676',
     resave: false,
@@ -199,9 +202,11 @@ app.use(session({
         secure: true, // Always use secure cookies (Vercel uses HTTPS)
         httpOnly: true, // Prevents XSS attacks
         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-        sameSite: 'lax', // Works for same-domain requests on Vercel
+        sameSite: 'lax', // Works for same-domain requests
         path: '/', // Ensure cookie is available for all paths
+        // Don't set domain - let browser handle it automatically
     },
+    rolling: true, // Reset expiration on every request
 }));
 
 // MySQL Database Connection - COMMENTED OUT
@@ -733,10 +738,16 @@ app.post('/reset-password', (req, res) => {
 });
 
 app.get('/check-auth', (req, res) => {
+    console.log('🔍 Checking auth status...');
+    console.log('Session ID:', req.sessionID);
+    console.log('Session exists:', !!req.session);
+    console.log('Session userr:', req.session?.userr);
+    console.log('Cookie:', req.headers.cookie);
+    
     if (req.session.userr) {
         res.json({ isLoggedIn: true, user: req.session.userr });
     } else {
-        res.json({ isLoggedIn: false });
+        res.json({ isLoggedIn: false, sessionId: req.sessionID });
     }
 });
 
@@ -746,6 +757,19 @@ app.get('/session-status', (req, res) => {
     } else {
         return res.json({ loggedIn: false });
     }
+});
+
+// Debug endpoint for session info
+app.get('/session-debug', (req, res) => {
+    res.json({
+        sessionId: req.sessionID,
+        sessionExists: !!req.session,
+        hasUser: !!req.session?.userr,
+        user: req.session?.userr || null,
+        cookie: req.headers.cookie,
+        isVercel: isVercel,
+        sessionStore: sessionStore ? 'MongoDB' : 'MemoryStore'
+    });
 });
 
 // Logout Endpoint - NEW CODE
