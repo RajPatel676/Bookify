@@ -329,9 +329,16 @@ function requireAuth(req, res, next) {
     // Check if user is authenticated
     if (req.session && req.session.userr) {
         // User is authenticated, proceed to next middleware
+        console.log('✅ User authenticated:', req.session.userr.email);
         return next();
     } else {
         // User is not authenticated, redirect to login page
+        console.log('❌ User not authenticated');
+        console.log('Session exists:', !!req.session);
+        console.log('Session userr:', req.session?.userr);
+        console.log('Session ID:', req.sessionID);
+        console.log('Request path:', req.path);
+        
         // For API requests, return JSON error
         if (req.headers['content-type'] && req.headers['content-type'].includes('application/json')) {
             return res.status(401).json({
@@ -340,6 +347,7 @@ function requireAuth(req, res, next) {
             });
         }
         // For HTML requests, redirect to login
+        console.log('Redirecting to /login.html');
         return res.redirect('/login.html');
     }
 }
@@ -579,6 +587,7 @@ app.post('/login', async(req, res) => {
         // Set session
         req.session.userr = { email: user.email, name: user.name, id: user._id };
         console.log('📝 Session data set for user:', user.email);
+        console.log('📝 Session ID:', req.sessionID);
         
         // Save session before sending response
         req.session.save((err) => {
@@ -588,12 +597,23 @@ app.post('/login', async(req, res) => {
             }
             
             console.log('✅ Session saved successfully for user:', user.email);
-            console.log('✅ Redirecting to /index.html');
             
-            res.status(200).json({
-                message: 'Login successful!',
-                redirectUrl: '/index.html'
-            });
+            // Check if request accepts HTML (form submission) or JSON (AJAX)
+            const acceptsHtml = req.headers.accept && req.headers.accept.includes('text/html');
+            
+            if (acceptsHtml) {
+                // Server-side redirect for form submissions
+                console.log('✅ Server-side redirect to /index.html');
+                return res.redirect('/index.html');
+            } else {
+                // JSON response for AJAX requests
+                console.log('✅ JSON response with redirect URL');
+                res.status(200).json({
+                    message: 'Login successful!',
+                    redirectUrl: '/index.html',
+                    success: true
+                });
+            }
         });
     } catch (error) {
         console.error('MongoDB login error:', error);

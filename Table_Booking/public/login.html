@@ -385,23 +385,28 @@
             try {
                 const response = await fetch('/login', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
                     credentials: 'include', // Include cookies in request
                     body: JSON.stringify({ email, password }),
                 });
 
                 const data = await response.json();
-                if (response.ok) {
+                if (response.ok && data.success) {
                     messageDiv.style.color = '#10b981';
                     messageDiv.style.background = 'rgba(16, 185, 129, 0.1)';
                     messageDiv.textContent = data.message || 'Login successful!';
                     
-                    // Redirect after a short delay to ensure session cookie is set
+                    // Redirect immediately - session is already saved on server
+                    const redirectUrl = data.redirectUrl || '/index.html';
+                    console.log('✅ Login successful, redirecting to:', redirectUrl);
+                    
+                    // Use a small delay to ensure message is visible
                     setTimeout(() => {
-                        const redirectUrl = data.redirectUrl || '/index.html';
-                        console.log('Redirecting to:', redirectUrl);
-                        // Use replace instead of href to avoid adding to browser history
-                        window.location.replace(redirectUrl);
+                        // Force a full page reload to ensure session cookie is sent
+                        window.location.href = redirectUrl;
                     }, 500);
                 } else {
                     messageDiv.style.color = '#ef4444';
