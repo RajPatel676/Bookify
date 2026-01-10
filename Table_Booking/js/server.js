@@ -157,13 +157,13 @@ let sessionStore = null;
 // Function to initialize MongoDB session store (called after mongoose connection)
 function initializeSessionStore() {
     if (!MONGODB_URI) {
-        console.warn('MONGODB_URI not set, using MemoryStore for sessions');
+        console.warn('⚠️  MONGODB_URI not set, using MemoryStore for sessions');
         return null;
     }
 
     // Check if mongoose is connected
     if (mongoose.connection.readyState !== 1) {
-        console.warn('Mongoose not connected yet, session store will use MemoryStore');
+        console.warn('⚠️  Mongoose not connected yet, session store will use MemoryStore');
         return null;
     }
 
@@ -176,11 +176,12 @@ function initializeSessionStore() {
             autoRemove: 'native',
             stringify: false,
         });
-        console.log('MongoDB session store initialized');
+        console.log('✅ MongoDB session store initialized successfully');
+        console.log('📝 Sessions will be stored in MongoDB collection: sessions');
         return store;
     } catch (err) {
-        console.error('Error creating MongoDB session store:', err);
-        console.warn('Falling back to MemoryStore (sessions will not persist across restarts)');
+        console.error('❌ Error creating MongoDB session store:', err.message || err);
+        console.warn('⚠️  Falling back to MemoryStore (sessions will not persist across restarts)');
         return null;
     }
 }
@@ -216,24 +217,28 @@ let isConnected = false;
 // Function to ensure MongoDB connection
 async function ensureMongoConnection() {
     if (!MONGODB_URI) {
-        console.error('MONGODB_URI is not set. Please configure it in environment variables.');
+        console.error('❌ MONGODB_URI is not set. Please configure it in environment variables.');
         return false;
     }
 
     // Check if already connected
     if (mongoose.connection.readyState === 1) {
+        console.log('✅ MongoDB already connected');
         return true;
     }
 
     // If connecting, wait a bit
     if (mongoose.connection.readyState === 2) {
+        console.log('⏳ MongoDB connection in progress, waiting...');
         // Wait for connection to complete (max 5 seconds)
         for (let i = 0; i < 10; i++) {
             await new Promise(resolve => setTimeout(resolve, 500));
             if (mongoose.connection.readyState === 1) {
+                console.log('✅ MongoDB connection established');
                 return true;
             }
             if (mongoose.connection.readyState === 0) {
+                console.log('⚠️  Connection attempt failed, retrying...');
                 break; // Connection failed, try to reconnect
             }
         }
@@ -241,6 +246,7 @@ async function ensureMongoConnection() {
 
     // If disconnected or never connected, try to connect
     if (mongoose.connection.readyState === 0 || mongoose.connection.readyState === 3) {
+        console.log('🔄 Attempting to connect to MongoDB Atlas...');
         try {
             await mongoose.connect(MONGODB_URI, {
                 serverSelectionTimeoutMS: 10000, // Timeout after 10s
@@ -249,31 +255,44 @@ async function ensureMongoConnection() {
                 minPoolSize: 1, // Maintain at least 1 socket connection
             });
             isConnected = true;
-            console.log('Connected to MongoDB Atlas');
+            console.log('✅ Connected to MongoDB Atlas successfully');
+            console.log('📊 Database: bookify');
+            console.log('📝 Note: Collection "users" will be created automatically on first signup');
 
             // Initialize session store after successful connection
             if (!sessionStore) {
                 sessionStore = initializeSessionStore();
                 // Note: New sessions will use MongoDB store
                 if (sessionStore) {
-                    console.log('Session store upgraded to MongoDB');
+                    console.log('✅ Session store upgraded to MongoDB');
                 }
             }
 
             return true;
         } catch (err) {
-            console.error('MongoDB Atlas connection error:', err.message || err);
+            console.error('❌ MongoDB Atlas connection error:', err.message || err);
             console.error('Connection error details:', {
                 name: err.name,
                 code: err.code,
                 codeName: err.codeName
             });
+            
+            // Provide helpful error messages
+            if (err.name === 'MongoServerSelectionError') {
+                console.error('💡 Tip: Check your network connection and MongoDB Atlas IP whitelist');
+            } else if (err.message && err.message.includes('authentication')) {
+                console.error('💡 Tip: Check your MongoDB username and password');
+            } else if (err.message && err.message.includes('timeout')) {
+                console.error('💡 Tip: Connection timeout - check your network or MongoDB Atlas status');
+            }
+            
             isConnected = false;
             return false;
         }
     }
 
     // If we get here, connection state is unknown
+    console.warn('⚠️  Unknown MongoDB connection state:', mongoose.connection.readyState);
     return mongoose.connection.readyState === 1;
 }
 
@@ -445,9 +464,15 @@ app.post('/signup', async(req, res) => {
         // Ensure MongoDB connection before query
         const connected = await ensureMongoConnection();
         if (!connected) {
-            console.error('MongoDB connection failed in signup endpoint. Connection state:', mongoose.connection.readyState);
-            return res.status(500).json({ message: 'Database connection failed. Please try again later.' });
+            console.error('❌ MongoDB connection failed in signup endpoint');
+            console.error('Connection state:', mongoose.connection.readyState);
+            console.error('States: 0=disconnected, 1=connected, 2=connecting, 3=disconnecting');
+            return res.status(500).json({ 
+                message: 'Database connection failed. Please check your MongoDB connection and try again.',
+                error: 'CONNECTION_ERROR'
+            });
         }
+        console.log('✅ MongoDB connected, proceeding with signup...');
 
         // Check if user already exists
         const existingUser = await User.findOne({ email: email.toLowerCase() });
@@ -521,8 +546,14 @@ app.post('/login', async(req, res) => {
         // Ensure MongoDB connection before query
         const connected = await ensureMongoConnection();
         if (!connected) {
-            return res.status(500).json({ message: 'Database connection failed. Please try again.' });
+            console.error('❌ MongoDB connection failed in login endpoint');
+            console.error('Connection state:', mongoose.connection.readyState);
+            return res.status(500).json({ 
+                message: 'Database connection failed. Please check your MongoDB connection and try again.',
+                error: 'CONNECTION_ERROR'
+            });
         }
+        console.log('✅ MongoDB connected, proceeding with login...');
 
         // Find user by email
         const user = await User.findOne({ email: email.toLowerCase() });
@@ -683,11 +714,41 @@ app.post('/send-email', async(req, res) => {
     }
 });
 
+// Initialize MongoDB connection on startup
+async function initializeServer() {
+    console.log('Initializing server...');
+    
+    if (!MONGODB_URI) {
+        console.error('⚠️  WARNING: MONGODB_URI is not set!');
+        console.error('Please set MONGODB_URI in your environment variables.');
+        return;
+    }
+
+    // Attempt to connect to MongoDB
+    try {
+        const connected = await ensureMongoConnection();
+        if (connected) {
+            console.log('✅ MongoDB connection established successfully');
+            console.log('📊 Database name: bookify');
+            console.log('📝 Collection "users" will be created automatically on first signup');
+        } else {
+            console.error('❌ Failed to connect to MongoDB');
+            console.error('Please check your MONGODB_URI and network connection');
+        }
+    } catch (error) {
+        console.error('❌ Error initializing MongoDB connection:', error.message);
+    }
+}
+
 // Start the server (only in development, not on Vercel)
 if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
-    app.listen(PORT, () => {
+    app.listen(PORT, async () => {
         console.log(`Server is running on http://localhost:${PORT}`);
+        await initializeServer();
     });
+} else {
+    // For Vercel, initialize connection when module loads
+    initializeServer();
 }
 
 // Export Express app for serverless function (required for Vercel)
