@@ -16,7 +16,14 @@ const app = express();
 const PORT = 3000;
 
 app.use(bodyParser.json());
-app.use(cors());
+
+// CORS configuration - MUST include credentials for sessions to work
+app.use(cors({
+    origin: true, // Allow all origins (Vercel handles this)
+    credentials: true, // CRITICAL: Allow cookies to be sent
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 // Trust proxy - important for Vercel
 app.set('trust proxy', 1);
@@ -147,64 +154,61 @@ const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://rajpatel:HpReE24BZ
 if (!MONGODB_URI) {
     console.error('ERROR: MONGODB_URI environment variable is not set!');
     console.error('Please set MONGODB_URI in your Vercel environment variables or .env file.');
+    process.exit(1); // Exit if no MongoDB URI - we cannot work without it
 }
 
-// Session configuration - using MongoDB session store for production
-// We'll create the session store after mongoose connection is established
+// Session store - MUST be initialized before session middleware
 const MongoStore = require('connect-mongo');
 
-// Configure session store - create it lazily to avoid SSL errors
-// For now, use MemoryStore and upgrade to MongoDB store after connection
-let sessionStore = null;
+// Configure mongoose for serverless (Vercel)
+mongoose.set('bufferCommands', false);
 
-// Function to initialize MongoDB session store (called after mongoose connection)
-function initializeSessionStore() {
-    if (!MONGODB_URI) {
-        console.warn('⚠️  MONGODB_URI not set, using MemoryStore for sessions');
-        return null;
-    }
+// CRITICAL: Initialize MongoDB session store BEFORE session middleware
+// This ensures sessions persist in serverless environments
+let sessionStore;
 
-    // Check if mongoose is connected
-    if (mongoose.connection.readyState !== 1) {
-        console.warn('⚠️  Mongoose not connected yet, session store will use MemoryStore');
-        return null;
-    }
-
-    try {
-        // For serverless, use mongoUrl instead of client to avoid connection issues
-        const store = MongoStore.create({
-            mongoUrl: MONGODB_URI,
-            touchAfter: 24 * 3600, // Lazy session update (24 hours)
-            ttl: 7 * 24 * 60 * 60, // Session expires after 7 days
-            autoRemove: 'native',
-            stringify: false,
-        });
-        console.log('✅ MongoDB session store initialized successfully');
-        console.log('📝 Sessions will be stored in MongoDB collection: sessions');
-        return store;
-    } catch (err) {
-        console.error('❌ Error creating MongoDB session store:', err.message || err);
-        console.warn('⚠️  Falling back to MemoryStore (sessions will not persist across restarts)');
-        return null;
-    }
+try {
+    // Create MongoDB session store directly - it will handle connection internally
+    sessionStore = MongoStore.create({
+        mongoUrl: MONGODB_URI,
+        touchAfter: 24 * 3600, // Lazy session update (24 hours)
+        ttl: 7 * 24 * 60 * 60, // Session expires after 7 days
+        autoRemove: 'native',
+        stringify: false,
+        // Connection options for serverless
+        mongoOptions: {
+            serverSelectionTimeoutMS: 10000,
+            socketTimeoutMS: 45000,
+            maxPoolSize: 10,
+            minPoolSize: 1,
+        }
+    });
+    console.log('✅ MongoDB session store initialized successfully');
+    console.log('📝 Sessions will be stored in MongoDB collection: sessions');
+} catch (err) {
+    console.error('❌ CRITICAL: Failed to initialize MongoDB session store:', err.message || err);
+    console.error('❌ Cannot proceed without session store - sessions will not persist');
+    // In production, we should exit - but for now, log error and continue
+    // This ensures the app doesn't silently fall back to MemoryStore
+    throw new Error('MongoDB session store initialization failed. Cannot start server without persistent sessions.');
 }
 
 // Detect if running on Vercel
 const isVercel = process.env.VERCEL === '1' || process.env.VERCEL_ENV;
 
+// Session middleware - NOW uses MongoDB store that is guaranteed to exist
 app.use(session({
     secret: process.env.SESSION_SECRET || 'rdp676',
     resave: false,
     saveUninitialized: false, // Changed to false for security
-    store: sessionStore || undefined, // Use MongoDB store if available, otherwise use default (MemoryStore for dev)
+    store: sessionStore, // ALWAYS use MongoDB store - never fall back to MemoryStore
     name: 'connect.sid', // Explicit session cookie name
     cookie: {
         secure: true, // Always use secure cookies (Vercel uses HTTPS)
         httpOnly: true, // Prevents XSS attacks
         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-        sameSite: 'lax', // Works for same-domain requests
+        sameSite: isVercel ? 'none' : 'lax', // 'none' required for Vercel with secure cookies
         path: '/', // Ensure cookie is available for all paths
-        // Don't set domain - let browser handle it automatically
     },
     rolling: true, // Reset expiration on every request
 }));
@@ -218,14 +222,11 @@ app.use(session({
 //     console.log('Connected to the database.');
 // });
 
-// Configure mongoose for serverless (Vercel)
-mongoose.set('bufferCommands', false);
-// Note: bufferMaxEntries was removed in Mongoose 8.x, so we don't set it
-
 // Connection state
 let isConnected = false;
 
-// Function to ensure MongoDB connection
+// Function to ensure MongoDB connection (for Mongoose operations like User queries)
+// Note: Session store already has its own connection, this is for app-level Mongoose operations
 async function ensureMongoConnection() {
     if (!MONGODB_URI) {
         console.error('❌ MONGODB_URI is not set. Please configure it in environment variables.');
@@ -234,7 +235,6 @@ async function ensureMongoConnection() {
 
     // Check if already connected
     if (mongoose.connection.readyState === 1) {
-        console.log('✅ MongoDB already connected');
         return true;
     }
 
@@ -245,11 +245,9 @@ async function ensureMongoConnection() {
         for (let i = 0; i < 10; i++) {
             await new Promise(resolve => setTimeout(resolve, 500));
             if (mongoose.connection.readyState === 1) {
-                console.log('✅ MongoDB connection established');
                 return true;
             }
             if (mongoose.connection.readyState === 0) {
-                console.log('⚠️  Connection attempt failed, retrying...');
                 break; // Connection failed, try to reconnect
             }
         }
@@ -257,7 +255,7 @@ async function ensureMongoConnection() {
 
     // If disconnected or never connected, try to connect
     if (mongoose.connection.readyState === 0 || mongoose.connection.readyState === 3) {
-        console.log('🔄 Attempting to connect to MongoDB Atlas...');
+        console.log('🔄 Attempting to connect to MongoDB Atlas for Mongoose operations...');
         try {
             await mongoose.connect(MONGODB_URI, {
                 serverSelectionTimeoutMS: 10000, // Timeout after 10s
@@ -269,16 +267,6 @@ async function ensureMongoConnection() {
             console.log('✅ Connected to MongoDB Atlas successfully');
             console.log('📊 Database: bookify');
             console.log('📝 Note: Collection "users" will be created automatically on first signup');
-
-            // Initialize session store after successful connection
-            if (!sessionStore) {
-                sessionStore = initializeSessionStore();
-                // Note: New sessions will use MongoDB store
-                if (sessionStore) {
-                    console.log('✅ Session store upgraded to MongoDB');
-                }
-            }
-
             return true;
         } catch (err) {
             console.error('❌ MongoDB Atlas connection error:', err.message || err);
@@ -303,7 +291,6 @@ async function ensureMongoConnection() {
     }
 
     // If we get here, connection state is unknown
-    console.warn('⚠️  Unknown MongoDB connection state:', mongoose.connection.readyState);
     return mongoose.connection.readyState === 1;
 }
 
@@ -768,7 +755,9 @@ app.get('/session-debug', (req, res) => {
         user: req.session?.userr || null,
         cookie: req.headers.cookie,
         isVercel: isVercel,
-        sessionStore: sessionStore ? 'MongoDB' : 'MemoryStore'
+        sessionStore: 'MongoDB', // Always MongoDB - never MemoryStore
+        mongooseConnected: mongoose.connection.readyState === 1,
+        cookieSettings: req.session?.cookie
     });
 });
 
