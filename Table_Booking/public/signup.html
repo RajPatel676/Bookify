@@ -382,20 +382,28 @@
             try {
                 const response = await fetch('/signup', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    credentials: 'include', // Include cookies in request
                     body: JSON.stringify({ name, email, password }),
                 });
 
                 const data = await response.json();
 
-                if (response.ok) {
+                if (response.ok && data.success) {
                     messageDiv.style.color = '#10b981';
                     messageDiv.style.background = 'rgba(16, 185, 129, 0.1)';
                     messageDiv.textContent = data.message || 'Signup successful!';
+                    
+                    // Redirect to home page - user is automatically logged in
+                    const redirectUrl = data.redirectUrl || '/index.html';
+                    console.log('✅ Signup successful, redirecting to home page:', redirectUrl);
+                    
                     setTimeout(() => {
-                        console.log('✅ Signup successful, redirecting to login');
-                        window.location.href = '/login.html';
-                    }, 1500);
+                        window.location.href = redirectUrl;
+                    }, 500);
                 } else {
                     messageDiv.style.color = '#ef4444';
                     messageDiv.style.background = 'rgba(239, 68, 68, 0.1)';

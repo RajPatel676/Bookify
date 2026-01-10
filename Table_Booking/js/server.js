@@ -509,7 +509,37 @@ app.post('/signup', async(req, res) => {
 
         await newUser.save();
         console.log('User created successfully:', newUser.email);
-        res.status(200).json({ message: 'Signup successful! Please login.' });
+        
+        // Automatically log in the user after signup
+        req.session.userr = { email: newUser.email, name: newUser.name, id: newUser._id };
+        console.log('📝 Session data set for new user:', newUser.email);
+        
+        // Save session before sending response
+        req.session.save((err) => {
+            if (err) {
+                console.error('❌ Error saving session:', err);
+                return res.status(500).json({ message: 'Error saving session. Please try again.' });
+            }
+            
+            console.log('✅ Session saved successfully for new user:', newUser.email);
+            
+            // Check if request accepts HTML (form submission) or JSON (AJAX)
+            const acceptsHtml = req.headers.accept && req.headers.accept.includes('text/html');
+            
+            if (acceptsHtml) {
+                // Server-side redirect for form submissions
+                console.log('✅ Server-side redirect to /index.html');
+                return res.redirect('/index.html');
+            } else {
+                // JSON response for AJAX requests
+                console.log('✅ JSON response with redirect URL');
+                res.status(200).json({
+                    message: 'Signup successful!',
+                    redirectUrl: '/index.html',
+                    success: true
+                });
+            }
+        });
     } catch (error) {
         console.error('MongoDB signup error:', error);
         console.error('Error details:', {
