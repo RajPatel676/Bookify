@@ -399,16 +399,45 @@
                     messageDiv.style.background = 'rgba(16, 185, 129, 0.1)';
                     messageDiv.textContent = data.message || 'Login successful!';
                     
-                    // Redirect to home page - session is already saved on server
+                    // Verify session is set before redirecting
                     const redirectUrl = data.redirectUrl || '/index.html';
-                    console.log('✅ Login successful, redirecting to:', redirectUrl);
-                    console.log('Response data:', data);
+                    console.log('✅ Login successful, verifying session...');
                     
-                    // Wait a bit longer to ensure session cookie is set
-                    setTimeout(() => {
-                        // Force a full page reload to ensure session cookie is sent
-                        window.location.href = redirectUrl;
-                    }, 1000);
+                    // Check if cookie is set
+                    const hasCookie = document.cookie.includes('connect.sid');
+                    console.log('Cookie present:', hasCookie);
+                    console.log('All cookies:', document.cookie);
+                    
+                    // Wait a moment, then verify session before redirecting
+                    setTimeout(async () => {
+                        try {
+                            // Check if session is actually set
+                            const checkResponse = await fetch('/check-auth', {
+                                method: 'GET',
+                                credentials: 'include',
+                                headers: {
+                                    'Accept': 'application/json'
+                                }
+                            });
+                            const checkData = await checkResponse.json();
+                            console.log('Session check result:', checkData);
+                            
+                            if (checkData.isLoggedIn) {
+                                console.log('✅ Session verified, redirecting to:', redirectUrl);
+                                // Force a hard redirect
+                                window.location.href = redirectUrl;
+                            } else {
+                                console.warn('⚠️ Session not found, but redirecting anyway...');
+                                // Redirect anyway - let server handle authentication
+                                window.location.href = redirectUrl;
+                            }
+                        } catch (err) {
+                            console.error('Error checking session:', err);
+                            // Redirect anyway after delay
+                            console.log('Redirecting anyway to:', redirectUrl);
+                            window.location.href = redirectUrl;
+                        }
+                    }, 2000);
                 } else {
                     messageDiv.style.color = '#ef4444';
                     messageDiv.style.background = 'rgba(239, 68, 68, 0.1)';
